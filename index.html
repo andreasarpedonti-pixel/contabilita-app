@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piano dei Conti - Contabilità Italiana con Centri di Costo</title>
+    <title>Piano dei Conti - Visualizzazione Completa</title>
     <style>
         * {
             margin: 0;
@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 1600px;
+            max-width: 100%;
             margin: 0 auto;
             background-color: white;
             border-radius: 15px;
@@ -39,17 +39,13 @@
             margin-bottom: 10px;
         }
 
-        header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
         /* TABS NAVIGATION */
         .tabs {
             display: flex;
             background: #f5f5f5;
             border-bottom: 2px solid #ddd;
             padding: 0 20px;
+            flex-wrap: wrap;
         }
 
         .tab {
@@ -85,31 +81,40 @@
         .tab-content {
             display: none;
             padding: 30px;
+            max-height: 800px;
+            overflow-y: auto;
         }
 
         .tab-content.active {
             display: block;
         }
 
-        /* PIANO DEI CONTI */
+        /* PIANO DEI CONTI - VISUALIZZAZIONE COMPLETA */
+        .piano-dei-conti-container {
+            width: 100%;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
         .piano-dei-conti {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            display: flex;
+            flex-wrap: nowrap;
             gap: 25px;
+            min-width: min-content;
+            padding: 10px;
         }
 
         .sezione {
+            flex: 0 0 350px;
             background: white;
             border-radius: 12px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: visible;
             border: 1px solid #e0e0e0;
-        }
-
-        .sezione:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            height: fit-content;
+            max-height: 700px;
+            display: flex;
+            flex-direction: column;
         }
 
         .sezione-header {
@@ -122,6 +127,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .sezione-contenuto {
+            overflow-y: auto;
+            padding: 15px;
+            flex-grow: 1;
+            max-height: 600px;
         }
 
         .btn-aggiungi-conto {
@@ -150,8 +165,9 @@
         .patrimonio .sezione-header { background: linear-gradient(135deg, #8e24aa 0%, #6a1b9a 100%); }
 
         .livello2 {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
             background-color: #f8f9fa;
         }
 
@@ -159,21 +175,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            padding: 12px 15px;
+            background-color: #f1f3f4;
+            border-bottom: 2px solid;
+            border-radius: 8px 8px 0 0;
         }
+
+        .attivo .livello2-header { border-bottom-color: #43a047; }
+        .passivo .livello2-header { border-bottom-color: #e53935; }
+        .costi .livello2-header { border-bottom-color: #fb8c00; }
+        .ricavi .livello2-header { border-bottom-color: #1e88e5; }
+        .patrimonio .livello2-header { border-bottom-color: #8e24aa; }
 
         .livello2 h3 {
             color: #333;
             font-size: 1.1em;
-            padding-left: 10px;
-            border-left: 4px solid;
+            margin: 0;
         }
-
-        .attivo .livello2 h3 { border-left-color: #43a047; }
-        .passivo .livello2 h3 { border-left-color: #e53935; }
-        .costi .livello2 h3 { border-left-color: #fb8c00; }
-        .ricavi .livello2 h3 { border-left-color: #1e88e5; }
-        .patrimonio .livello2 h3 { border-left-color: #8e24aa; }
 
         .btn-aggiungi-sottoconto {
             background: #4e54c8;
@@ -197,14 +215,14 @@
 
         .livello3 {
             list-style: none;
-            margin-left: 15px;
+            padding: 10px;
         }
 
         .livello3 li {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 15px;
+            padding: 10px 12px;
             margin: 5px 0;
             background-color: white;
             border-radius: 6px;
@@ -212,8 +230,7 @@
             color: #555;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             transition: all 0.3s;
-            cursor: pointer;
-            border-left: 2px solid transparent;
+            border-left: 3px solid transparent;
         }
 
         .livello3 li:hover {
@@ -224,15 +241,24 @@
 
         .codice-conto {
             font-family: 'Courier New', monospace;
-            color: #666;
-            font-size: 0.9em;
+            color: #4e54c8;
+            font-size: 0.85em;
             margin-right: 10px;
             font-weight: bold;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
         }
 
         .azioni-conto {
             display: flex;
-            gap: 5px;
+            gap: 8px;
+            opacity: 0.3;
+            transition: opacity 0.3s;
+        }
+
+        .livello3 li:hover .azioni-conto {
+            opacity: 1;
         }
 
         .btn-modifica, .btn-elimina {
@@ -240,13 +266,7 @@
             background: none;
             font-size: 1.1em;
             cursor: pointer;
-            padding: 0 5px;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-
-        .btn-modifica:hover, .btn-elimina:hover {
-            opacity: 1;
+            padding: 0 3px;
         }
 
         .btn-modifica { color: #4e54c8; }
@@ -266,11 +286,6 @@
             color: white;
         }
 
-        .form-centro-costo h2 {
-            margin-bottom: 20px;
-            font-size: 1.5em;
-        }
-
         .form-group {
             margin-bottom: 20px;
         }
@@ -288,11 +303,6 @@
             border-radius: 8px;
             font-size: 1em;
             background: rgba(255,255,255,0.9);
-        }
-
-        .form-group textarea {
-            height: 80px;
-            resize: vertical;
         }
 
         .btn-salva {
@@ -315,11 +325,8 @@
             background: #f8f9fa;
             padding: 25px;
             border-radius: 12px;
-        }
-
-        .lista-centri-costo h2 {
-            margin-bottom: 20px;
-            color: #333;
+            max-height: 600px;
+            overflow-y: auto;
         }
 
         .centro-costo-card {
@@ -328,24 +335,6 @@
             border-radius: 8px;
             margin-bottom: 15px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: transform 0.3s;
-        }
-
-        .centro-costo-card:hover {
-            transform: translateX(5px);
-        }
-
-        .centro-costo-info h3 {
-            color: #4e54c8;
-            margin-bottom: 5px;
-        }
-
-        .centro-costo-info p {
-            color: #666;
-            font-size: 0.9em;
         }
 
         .badge {
@@ -355,6 +344,8 @@
             border-radius: 20px;
             font-size: 0.8em;
             font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
         }
 
         footer {
@@ -365,17 +356,33 @@
             border-top: 1px solid #e0e0e0;
         }
 
+        /* Scrollbar personalizzata */
+        .sezione-contenuto::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sezione-contenuto::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .sezione-contenuto::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .sezione-contenuto::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
         @media (max-width: 768px) {
             .piano-dei-conti {
-                grid-template-columns: 1fr;
+                flex-direction: column;
             }
             
-            header h1 {
-                font-size: 1.8em;
-            }
-
-            .centri-costo-container {
-                grid-template-columns: 1fr;
+            .sezione {
+                flex: 1 1 auto;
+                width: 100%;
             }
         }
     </style>
@@ -384,7 +391,7 @@
     <div class="container">
         <header>
             <h1>📊 GESTIONE CONTABILITÀ ITALIANA</h1>
-            <p>Piano dei conti a tre livelli con numerazione progressiva e centri di costo</p>
+            <p>Piano dei conti dinamico - Visualizzazione completa e scrollabile</p>
         </header>
 
         <!-- TABS NAVIGATION -->
@@ -396,171 +403,9 @@
 
         <!-- TAB PIANO DEI CONTI -->
         <div id="piano-conti" class="tab-content active">
-            <div class="piano-dei-conti">
-                <!-- SEZIONE ATTIVO -->
-                <div class="sezione attivo" data-sezione="attivo" data-prefisso="A">
-                    <div class="sezione-header">
-                        <span>💰 ATTIVO</span>
-                        <button class="btn-aggiungi-conto" onclick="aggiungiConto('attivo')" title="Aggiungi conto di livello 2">+</button>
-                    </div>
-                    
-                    <div class="livello2" data-livello2="immobilizzazioni-immateriali" data-prefisso="A.I">
-                        <div class="livello2-header">
-                            <h3>📁 Immobilizzazioni Immateriali</h3>
-                            <button class="btn-aggiungi-sottoconto" onclick="aggiungiSottoconto('attivo', 'immobilizzazioni-immateriali')" title="Aggiungi conto di livello 3">+</button>
-                        </div>
-                        <ul class="livello3" id="attivo-immobilizzazioni-immateriali">
-                            <li data-conto="A.I.1">
-                                <span><span class="codice-conto">A.I.1</span> Costi di impianto e ampliamento</span>
-                                <span class="azioni-conto">
-                                    <button class="btn-modifica" onclick="modificaConto(this)">✏️</button>
-                                    <button class="btn-elimina" onclick="eliminaConto(this)">🗑️</button>
-                                </span>
-                            </li>
-                            <li data-conto="A.I.2">
-                                <span><span class="codice-conto">A.I.2</span> Costi di sviluppo</span>
-                                <span class="azioni-conto">
-                                    <button class="btn-modifica" onclick="modificaConto(this)">✏️</button>
-                                    <button class="btn-elimina" onclick="eliminaConto(this)">🗑️</button>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="livello2" data-livello2="immobilizzazioni-materiali" data-prefisso="A.II">
-                        <div class="livello2-header">
-                            <h3>📦 Immobilizzazioni Materiali</h3>
-                            <button class="btn-aggiungi-sottoconto" onclick="aggiungiSottoconto('attivo', 'immobilizzazioni-materiali')" title="Aggiungi conto di livello 3">+</button>
-                        </div>
-                        <ul class="livello3" id="attivo-immobilizzazioni-materiali">
-                            <li data-conto="A.II.1">
-                                <span><span class="codice-conto">A.II.1</span> Terreni e fabbricati</span>
-                                <span class="azioni-conto">
-                                    <button class="btn-modifica" onclick="modificaConto(this)">✏️</button>
-                                    <button class="btn-elimina" onclick="eliminaConto(this)">🗑️</button>
-                                </span>
-                            </li>
-                            <li data-conto="A.II.2">
-                                <span><span class="codice-conto">A.II.2</span> Impianti e macchinario</span>
-                                <span class="azioni-conto">
-                                    <button class="btn-modifica" onclick="modificaConto(this)">✏️</button>
-                                    <button class="btn-elimina" onclick="eliminaConto(this)">🗑️</button>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="livello2" data-livello2="attivo-circolante" data-prefisso="A.III">
-                        <div class="livello2-header">
-                            <h3>💼 Attivo Circolante</h3>
-                            <button class="btn-aggiungi-sottoconto" onclick="aggiungiSottoconto('attivo', 'attivo-circolante')" title="Aggiungi conto di livello 3">+</button>
-                        </div>
-                        <ul class="livello3" id="attivo-attivo-circolante">
-                            <li data-conto="A.III.1">
-                                <span><span class="codice-conto">A.III.1</span> Rimanenze materie prime</span>
-                                <span class="azioni-conto">
-                                    <button class="btn-modifica" onclick="modificaConto(this)">✏️</button>
-                                    <button class="btn-elimina" onclick="eliminaConto(this)">🗑️</button>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- SEZIONE PASSIVO -->
-                <div class="sezione passivo" data-sezione="passivo" data-prefisso="P">
-                    <div class="sezione-header">
-                        <span>💳 PASSIVO</span>
-                        <button class="btn-aggiungi-conto" onclick="aggiungiConto('passivo')" title="Aggiungi conto di livello 2">+</button>
-                    </div>
-                    
-                    <div class="livello2" data-livello2="debiti-finanziari" data-prefisso="P.I">
-                        <div class="livello2-header">
-                            <h3>🏦 Debiti Finanziari</h3>
-                            <button class="btn-aggiungi-sottoconto" onclick="aggiungiSottoconto('passivo', 'debiti-finanziari')" title="Aggiungi conto di livello 3">+</button>
-                        </div>
-                        <ul class="livello3" id="passivo-debiti-finanziari">
-                            <li data-conto="P.I.1">
-                                <span><span class="codice-conto">P.I.1</span> Obbligazioni</span>
-                                <span class="azioni-conto">
-                                    <button class="btn-modifica" onclick="modificaConto(this)">✏️</button>
-                                    <button class="btn-elimina" onclick="eliminaConto(this)">🗑️</button>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- SEZIONE COSTI -->
-                <div class="sezione costi" data-sezione="costi" data-prefisso="C">
-                    <div class="sezione-header">
-                        <span>📉 COSTI</span>
-                        <button class="btn-aggiungi-conto" onclick="aggiungiConto('costi')" title="Aggiungi conto di livello 2">+</button>
-                    </div>
-                    
-                    <div class="livello2" data-livello2="costi-materie" data-prefisso="C.I">
-                        <div class="livello2-header">
-                            <h3>🛒 Costi per Materie Prime</h3>
-                            <button class="btn-aggiungi-sottoconto" onclick="aggiungiSottoconto('costi', 'costi-materie')" title="Aggiungi conto di livello 3">+</button>
-                        </div>
-                        <ul class="livello3" id="costi-costi-materie">
-                            <li data-conto="C.I.1">
-                                <span><span class="codice-conto">C.I.1</span> Acquisto materie prime</span>
-                                <span class="azioni-conto">
-                                    <button class="btn-modifica" onclick="modificaConto(this)">✏️</button>
-                                    <button class="btn-elimina" onclick="eliminaConto(this)">🗑️</button>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- SEZIONE RICAVI -->
-                <div class="sezione ricavi" data-sezione="ricavi" data-prefisso="R">
-                    <div class="sezione-header">
-                        <span>📈 RICAVI</span>
-                        <button class="btn-aggiungi-conto" onclick="aggiungiConto('ricavi')" title="Aggiungi conto di livello 2">+</button>
-                    </div>
-                    
-                    <div class="livello2" data-livello2="ricavi-vendite" data-prefisso="R.I">
-                        <div class="livello2-header">
-                            <h3>🏭 Ricavi delle Vendite</h3>
-                            <button class="btn-aggiungi-sottoconto" onclick="aggiungiSottoconto('ricavi', 'ricavi-vendite')" title="Aggiungi conto di livello 3">+</button>
-                        </div>
-                        <ul class="livello3" id="ricavi-ricavi-vendite">
-                            <li data-conto="R.I.1">
-                                <span><span class="codice-conto">R.I.1</span> Vendita prodotti finiti</span>
-                                <span class="azioni-conto">
-                                    <button class="btn-modifica" onclick="modificaConto(this)">✏️</button>
-                                    <button class="btn-elimina" onclick="eliminaConto(this)">🗑️</button>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- SEZIONE PATRIMONIO NETTO -->
-                <div class="sezione patrimonio" data-sezione="patrimonio" data-prefisso="PN">
-                    <div class="sezione-header">
-                        <span>🏛️ PATRIMONIO NETTO</span>
-                        <button class="btn-aggiungi-conto" onclick="aggiungiConto('patrimonio')" title="Aggiungi conto di livello 2">+</button>
-                    </div>
-                    
-                    <div class="livello2" data-livello2="capitale-sociale" data-prefisso="PN.I">
-                        <div class="livello2-header">
-                            <h3>💰 Capitale Sociale</h3>
-                            <button class="btn-aggiungi-sottoconto" onclick="aggiungiSottoconto('patrimonio', 'capitale-sociale')" title="Aggiungi conto di livello 3">+</button>
-                        </div>
-                        <ul class="livello3" id="patrimonio-capitale-sociale">
-                            <li data-conto="PN.I.1">
-                                <span><span class="codice-conto">PN.I.1</span> Capitale sociale sottoscritto</span>
-                                <span class="azioni-conto">
-                                    <button class="btn-modifica" onclick="modificaConto(this)">✏️</button>
-                                    <button class="btn-elimina" onclick="eliminaConto(this)">🗑️</button>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
+            <div class="piano-dei-conti-container">
+                <div class="piano-dei-conti" id="pianoDeiConti">
+                    <!-- Le sezioni verranno generate dinamicamente qui -->
                 </div>
             </div>
         </div>
@@ -597,9 +442,7 @@
 
                 <div class="lista-centri-costo">
                     <h2>📋 Centri di Costo Attivi</h2>
-                    <div id="elenco-centri-costo">
-                        <!-- I centri di costo verranno inseriti qui dinamicamente -->
-                    </div>
+                    <div id="elenco-centri-costo"></div>
                 </div>
             </div>
         </div>
@@ -609,35 +452,342 @@
             <div style="text-align: center; padding: 50px;">
                 <h2 style="color: #4e54c8;">📝 Registrazioni Contabili</h2>
                 <p style="color: #666; margin: 20px 0;">Prossimamente: interfaccia per le registrazioni in partita doppia</p>
-                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px;">
-                    <p style="font-size: 1.2em;">Funzionalità in sviluppo:</p>
-                    <ul style="list-style: none; margin-top: 15px;">
-                        <li>✓ Prima Nota</li>
-                        <li>✓ Libro Giornale</li>
-                        <li>✓ Partita Doppia</li>
-                        <li>✓ Bilancio di Verifica</li>
-                    </ul>
-                </div>
             </div>
         </div>
 
         <footer>
-            <p>📋 Sistema di contabilità civilistica italiana - Versione 2.0 con Centri di Costo</p>
+            <p>📋 Sistema di contabilità civilistica italiana - Visualizzazione dinamica completa</p>
         </footer>
     </div>
 
     <script>
+        // Struttura dati del piano dei conti
+        let pianoDeiConti = {
+            attivo: {
+                nome: 'ATTIVO',
+                colore: 'attivo',
+                prefisso: 'A',
+                categorie: {
+                    'immobilizzazioni-immateriali': {
+                        nome: 'Immobilizzazioni Immateriali',
+                        prefisso: 'A.I',
+                        conti: [
+                            { codice: 'A.I.1', descrizione: 'Costi di impianto e ampliamento' },
+                            { codice: 'A.I.2', descrizione: 'Costi di sviluppo' },
+                            { codice: 'A.I.3', descrizione: 'Diritti di brevetto industriale' },
+                            { codice: 'A.I.4', descrizione: 'Concessioni, licenze, marchi' },
+                            { codice: 'A.I.5', descrizione: 'Avviamento' }
+                        ]
+                    },
+                    'immobilizzazioni-materiali': {
+                        nome: 'Immobilizzazioni Materiali',
+                        prefisso: 'A.II',
+                        conti: [
+                            { codice: 'A.II.1', descrizione: 'Terreni e fabbricati' },
+                            { codice: 'A.II.2', descrizione: 'Impianti e macchinario' },
+                            { codice: 'A.II.3', descrizione: 'Attrezzature industriali e commerciali' }
+                        ]
+                    },
+                    'attivo-circolante': {
+                        nome: 'Attivo Circolante',
+                        prefisso: 'A.III',
+                        conti: [
+                            { codice: 'A.III.1', descrizione: 'Rimanenze materie prime' },
+                            { codice: 'A.III.2', descrizione: 'Rimanenze prodotti in corso' },
+                            { codice: 'A.III.3', descrizione: 'Rimanenze prodotti finiti' },
+                            { codice: 'A.III.4', descrizione: 'Crediti verso clienti' },
+                            { codice: 'A.III.5', descrizione: 'Disponibilità liquide' }
+                        ]
+                    },
+                    'crediti-diversi': {
+                        nome: 'Crediti Diversi',
+                        prefisso: 'A.IV',
+                        conti: [
+                            { codice: 'A.IV.1', descrizione: 'Crediti verso controllate' },
+                            { codice: 'A.IV.2', descrizione: 'Crediti tributari' },
+                            { codice: 'A.IV.3', descrizione: 'Crediti per imposte anticipate' }
+                        ]
+                    }
+                }
+            },
+            passivo: {
+                nome: 'PASSIVO',
+                colore: 'passivo',
+                prefisso: 'P',
+                categorie: {
+                    'debiti-finanziari': {
+                        nome: 'Debiti Finanziari',
+                        prefisso: 'P.I',
+                        conti: [
+                            { codice: 'P.I.1', descrizione: 'Obbligazioni' },
+                            { codice: 'P.I.2', descrizione: 'Debiti verso banche a breve' },
+                            { codice: 'P.I.3', descrizione: 'Debiti verso banche a medio/lungo' }
+                        ]
+                    },
+                    'debiti-commerciali': {
+                        nome: 'Debiti Commerciali',
+                        prefisso: 'P.II',
+                        conti: [
+                            { codice: 'P.II.1', descrizione: 'Debiti verso fornitori' },
+                            { codice: 'P.II.2', descrizione: 'Acconti da clienti' },
+                            { codice: 'P.II.3', descrizione: 'Debiti per fatture da ricevere' }
+                        ]
+                    },
+                    'debiti-tributari': {
+                        nome: 'Debiti Tributari e Previdenziali',
+                        prefisso: 'P.III',
+                        conti: [
+                            { codice: 'P.III.1', descrizione: 'Debiti per IVA' },
+                            { codice: 'P.III.2', descrizione: 'Debiti per IRES' },
+                            { codice: 'P.III.3', descrizione: 'Debiti per IRAP' },
+                            { codice: 'P.III.4', descrizione: 'Debiti verso INPS' }
+                        ]
+                    }
+                }
+            },
+            costi: {
+                nome: 'COSTI',
+                colore: 'costi',
+                prefisso: 'C',
+                categorie: {
+                    'costi-materie': {
+                        nome: 'Costi per Materie Prime',
+                        prefisso: 'C.I',
+                        conti: [
+                            { codice: 'C.I.1', descrizione: 'Acquisto materie prime' },
+                            { codice: 'C.I.2', descrizione: 'Acquisto materie sussidiarie' },
+                            { codice: 'C.I.3', descrizione: 'Acquisto materiali di consumo' }
+                        ]
+                    },
+                    'costi-servizi': {
+                        nome: 'Costi per Servizi',
+                        prefisso: 'C.II',
+                        conti: [
+                            { codice: 'C.II.1', descrizione: 'Costi per consulenze' },
+                            { codice: 'C.II.2', descrizione: 'Utenze' },
+                            { codice: 'C.II.3', descrizione: 'Spese di manutenzione' },
+                            { codice: 'C.II.4', descrizione: 'Assicurazioni' }
+                        ]
+                    },
+                    'costi-personale': {
+                        nome: 'Costi del Personale',
+                        prefisso: 'C.III',
+                        conti: [
+                            { codice: 'C.III.1', descrizione: 'Salari e stipendi' },
+                            { codice: 'C.III.2', descrizione: 'Oneri sociali' },
+                            { codice: 'C.III.3', descrizione: 'Trattamento di fine rapporto' }
+                        ]
+                    }
+                }
+            },
+            ricavi: {
+                nome: 'RICAVI',
+                colore: 'ricavi',
+                prefisso: 'R',
+                categorie: {
+                    'ricavi-vendite': {
+                        nome: 'Ricavi delle Vendite',
+                        prefisso: 'R.I',
+                        conti: [
+                            { codice: 'R.I.1', descrizione: 'Vendita prodotti finiti' },
+                            { codice: 'R.I.2', descrizione: 'Vendita merci' },
+                            { codice: 'R.I.3', descrizione: 'Prestazioni di servizi' }
+                        ]
+                    },
+                    'ricavi-accessori': {
+                        nome: 'Ricavi Accessori',
+                        prefisso: 'R.II',
+                        conti: [
+                            { codice: 'R.II.1', descrizione: 'Affitti attivi' },
+                            { codice: 'R.II.2', descrizione: 'Royalties attive' },
+                            { codice: 'R.II.3', descrizione: 'Plusvalenze da alienazioni' }
+                        ]
+                    },
+                    'proventi-finanziari': {
+                        nome: 'Proventi Finanziari',
+                        prefisso: 'R.III',
+                        conti: [
+                            { codice: 'R.III.1', descrizione: 'Interessi attivi bancari' },
+                            { codice: 'R.III.2', descrizione: 'Dividendi' }
+                        ]
+                    }
+                }
+            },
+            patrimonio: {
+                nome: 'PATRIMONIO NETTO',
+                colore: 'patrimonio',
+                prefisso: 'PN',
+                categorie: {
+                    'capitale-sociale': {
+                        nome: 'Capitale Sociale',
+                        prefisso: 'PN.I',
+                        conti: [
+                            { codice: 'PN.I.1', descrizione: 'Capitale sociale sottoscritto' },
+                            { codice: 'PN.I.2', descrizione: 'Capitale sociale versato' }
+                        ]
+                    },
+                    'riserve': {
+                        nome: 'Riserve',
+                        prefisso: 'PN.II',
+                        conti: [
+                            { codice: 'PN.II.1', descrizione: 'Riserva legale' },
+                            { codice: 'PN.II.2', descrizione: 'Riserva straordinaria' },
+                            { codice: 'PN.II.3', descrizione: 'Riserva da sovrapprezzo azioni' }
+                        ]
+                    },
+                    'utili-perdite': {
+                        nome: 'Utili/Perdite',
+                        prefisso: 'PN.III',
+                        conti: [
+                            { codice: 'PN.III.1', descrizione: 'Utili (perdite) portati a nuovo' },
+                            { codice: 'PN.III.2', descrizione: 'Utile (perdita) dell\'esercizio' }
+                        ]
+                    }
+                }
+            }
+        };
+
+        // Centri di Costo
+        let centriCosto = [];
+
+        // Funzione per renderizzare il piano dei conti
+        function renderizzaPianoDeiConti() {
+            const container = document.getElementById('pianoDeiConti');
+            container.innerHTML = '';
+
+            for (let [sezioneId, sezione] of Object.entries(pianoDeiConti)) {
+                const sezioneDiv = document.createElement('div');
+                sezioneDiv.className = `sezione ${sezione.colore}`;
+                sezioneDiv.dataset.sezione = sezioneId;
+                sezioneDiv.dataset.prefisso = sezione.prefisso;
+
+                // Header sezione
+                sezioneDiv.innerHTML = `
+                    <div class="sezione-header">
+                        <span>${sezione.nome}</span>
+                        <button class="btn-aggiungi-conto" onclick="aggiungiCategoria('${sezioneId}')" title="Aggiungi categoria">+</button>
+                    </div>
+                    <div class="sezione-contenuto" id="sezione-${sezioneId}">
+                    </div>
+                `;
+
+                container.appendChild(sezioneDiv);
+
+                // Aggiungi categorie
+                const contenutoSezione = document.getElementById(`sezione-${sezioneId}`);
+                
+                for (let [categoriaId, categoria] of Object.entries(sezione.categorie)) {
+                    const categoriaDiv = document.createElement('div');
+                    categoriaDiv.className = 'livello2';
+                    categoriaDiv.dataset.categoria = categoriaId;
+                    categoriaDiv.dataset.prefisso = categoria.prefisso;
+
+                    let contiHtml = '';
+                    categoria.conti.forEach(conto => {
+                        contiHtml += `
+                            <li data-conto="${conto.codice}">
+                                <span>
+                                    <span class="codice-conto">${conto.codice}</span> 
+                                    ${conto.descrizione}
+                                </span>
+                                <span class="azioni-conto">
+                                    <button class="btn-modifica" onclick="modificaConto(this, '${sezioneId}', '${categoriaId}')">✏️</button>
+                                    <button class="btn-elimina" onclick="eliminaConto(this, '${sezioneId}', '${categoriaId}')">🗑️</button>
+                                </span>
+                            </li>
+                        `;
+                    });
+
+                    categoriaDiv.innerHTML = `
+                        <div class="livello2-header">
+                            <h3>${categoria.nome}</h3>
+                            <button class="btn-aggiungi-sottoconto" onclick="aggiungiConto('${sezioneId}', '${categoriaId}')" title="Aggiungi conto">+</button>
+                        </div>
+                        <ul class="livello3">
+                            ${contiHtml}
+                        </ul>
+                    `;
+
+                    contenutoSezione.appendChild(categoriaDiv);
+                }
+            }
+        }
+
+        // Funzioni per la gestione dei conti
+        function aggiungiCategoria(sezioneId) {
+            const nomeCategoria = prompt("Inserisci il nome della nuova categoria (livello 2):");
+            if (nomeCategoria) {
+                const sezione = pianoDeiConti[sezioneId];
+                const numCategorie = Object.keys(sezione.categorie).length + 1;
+                const categoriaId = `categoria-${Date.now()}`;
+                const prefisso = `${sezione.prefisso}.${numCategorie}`;
+                
+                sezione.categorie[categoriaId] = {
+                    nome: nomeCategoria,
+                    prefisso: prefisso,
+                    conti: []
+                };
+                
+                renderizzaPianoDeiConti();
+            }
+        }
+
+        function aggiungiConto(sezioneId, categoriaId) {
+            const descrizione = prompt("Inserisci la descrizione del nuovo conto (livello 3):");
+            if (descrizione) {
+                const sezione = pianoDeiConti[sezioneId];
+                const categoria = sezione.categorie[categoriaId];
+                const numConto = categoria.conti.length + 1;
+                const nuovoCodice = `${categoria.prefisso}.${numConto}`;
+                
+                categoria.conti.push({
+                    codice: nuovoCodice,
+                    descrizione: descrizione
+                });
+                
+                renderizzaPianoDeiConti();
+            }
+        }
+
+        function modificaConto(button, sezioneId, categoriaId) {
+            const li = button.closest('li');
+            const codice = li.querySelector('.codice-conto').textContent;
+            const descrizione = li.querySelector('span span').nextSibling.textContent.trim();
+            
+            const nuovaDescrizione = prompt("Modifica descrizione conto:", descrizione);
+            if (nuovaDescrizione) {
+                const sezione = pianoDeiConti[sezioneId];
+                const categoria = sezione.categorie[categoriaId];
+                const conto = categoria.conti.find(c => c.codice === codice);
+                if (conto) {
+                    conto.descrizione = nuovaDescrizione;
+                }
+                renderizzaPianoDeiConti();
+            }
+        }
+
+        function eliminaConto(button, sezioneId, categoriaId) {
+            if (confirm("Sei sicuro di voler eliminare questo conto?")) {
+                const li = button.closest('li');
+                const codice = li.querySelector('.codice-conto').textContent;
+                
+                const sezione = pianoDeiConti[sezioneId];
+                const categoria = sezione.categorie[categoriaId];
+                categoria.conti = categoria.conti.filter(c => c.codice !== codice);
+                
+                renderizzaPianoDeiConti();
+            }
+        }
+
         // Gestione TABS
         function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.remove("active");
+            const tabcontents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontents.length; i++) {
+                tabcontents[i].classList.remove("active");
             }
             
-            tablinks = document.getElementsByClassName("tab");
-            for (i = 0; i < tablinks.length; i++) {
+            const tablinks = document.getElementsByClassName("tab");
+            for (let i = 0; i < tablinks.length; i++) {
                 tablinks[i].classList.remove("active");
             }
             
@@ -646,8 +796,6 @@
         }
 
         // Gestione Centri di Costo
-        let centriCosto = [];
-
         function salvaCentroCosto(event) {
             event.preventDefault();
             
@@ -672,77 +820,21 @@
                 const card = document.createElement('div');
                 card.className = 'centro-costo-card';
                 card.innerHTML = `
-                    <div class="centro-costo-info">
-                        <h3>${centro.codice} - ${centro.nome}</h3>
-                        <p>Responsabile: ${centro.responsabile || 'Non assegnato'}</p>
-                        <p>Budget: € ${parseFloat(centro.budget || 0).toFixed(2)}</p>
-                    </div>
+                    <h3>${centro.codice} - ${centro.nome}</h3>
+                    <p><strong>Responsabile:</strong> ${centro.responsabile || 'Non assegnato'}</p>
+                    <p><strong>Budget:</strong> € ${parseFloat(centro.budget || 0).toFixed(2)}</p>
+                    <p><strong>Descrizione:</strong> ${centro.descrizione || 'Nessuna descrizione'}</p>
                     <span class="badge">Attivo</span>
                 `;
                 elenco.appendChild(card);
             });
         }
 
-        // Gestione Conti
-        function aggiungiConto(sezione) {
-            const nomeConto = prompt("Inserisci il nome del conto di livello 2:");
-            if (nomeConto) {
-                alert(`Conto "${nomeConto}" aggiunto alla sezione ${sezione}. La numerazione progressiva verrà generata automaticamente.`);
-                // Qui implementeremo la logica per aggiungere effettivamente il conto
-            }
-        }
-
-        function aggiungiSottoconto(sezione, livello2) {
-            const nomeConto = prompt("Inserisci il nome del conto di livello 3:");
-            if (nomeConto) {
-                const listaId = `${sezione}-${livello2}`;
-                const lista = document.getElementById(listaId);
-                if (lista) {
-                    // Calcola il prossimo numero progressivo
-                    const contiEsistenti = lista.children.length;
-                    const sezioneElement = document.querySelector(`[data-sezione="${sezione}"]`);
-                    const livello2Element = document.querySelector(`[data-livello2="${livello2}"]`);
-                    
-                    let prefisso = '000';
-                    if (livello2Element) {
-                        prefisso = livello2Element.dataset.prefisso || '000';
-                    }
-                    
-                    const nuovoCodice = `${prefisso}.${contiEsistenti + 1}`;
-                    
-                    const nuovoLi = document.createElement('li');
-                    nuovoLi.setAttribute('data-conto', nuovoCodice);
-                    nuovoLi.innerHTML = `
-                        <span><span class="codice-conto">${nuovoCodice}</span> ${nomeConto}</span>
-                        <span class="azioni-conto">
-                            <button class="btn-modifica" onclick="modificaConto(this)">✏️</button>
-                            <button class="btn-elimina" onclick="eliminaConto(this)">🗑️</button>
-                        </span>
-                    `;
-                    lista.appendChild(nuovoLi);
-                }
-            }
-        }
-
-        function modificaConto(button) {
-            const li = button.closest('li');
-            const codice = li.querySelector('.codice-conto').textContent;
-            const descrizione = li.textContent.replace(codice, '').replace('✏️🗑️', '').trim();
-            const nuovaDescrizione = prompt("Modifica descrizione conto:", descrizione);
-            if (nuovaDescrizione) {
-                li.querySelector('span span').nextSibling.textContent = ' ' + nuovaDescrizione;
-            }
-        }
-
-        function eliminaConto(button) {
-            if (confirm("Sei sicuro di voler eliminare questo conto?")) {
-                const li = button.closest('li');
-                li.remove();
-            }
-        }
-
-        // Aggiungi centro di costo di esempio
-        setTimeout(() => {
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizzaPianoDeiConti();
+            
+            // Centri di costo di esempio
             centriCosto.push({
                 codice: 'CD01',
                 nome: 'Produzione',
@@ -758,7 +850,7 @@
                 descrizione: 'Costi amministrativi generali'
             });
             aggiornaListaCentriCosto();
-        }, 100);
+        });
     </script>
 </body>
 </html>
