@@ -732,6 +732,9 @@
             const container = document.getElementById('pianoDeiConti');
             container.innerHTML = '';
 
+            // Verifichiamo che tutte le sezioni siano presenti
+            console.log('Sezioni presenti:', Object.keys(pianoDeiConti));
+            
             for (let [sezioneId, sezione] of Object.entries(pianoDeiConti)) {
                 const sezioneDiv = document.createElement('div');
                 sezioneDiv.className = `sezione ${sezione.colore}`;
@@ -909,6 +912,7 @@
 
         // Inizializzazione
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('Inizializzazione piano dei conti con:', Object.keys(pianoDeiConti));
             renderizzaPianoDeiConti();
             
             // Centri di costo di esempio
@@ -932,6 +936,13 @@
                 responsabile: 'Luigi Verdi',
                 budget: '40000',
                 descrizione: 'Costi area commerciale e marketing'
+            });
+            centriCosto.push({
+                codice: 'CD04',
+                nome: 'Ricerca e Sviluppo',
+                responsabile: 'Maria Galli',
+                budget: '25000',
+                descrizione: 'Costi di R&D'
             });
             aggiornaListaCentriCosto();
         });
