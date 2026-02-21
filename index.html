@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>Contabilità · Modern UI</title>
+    <title>Contabilità · Fatture Passive</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
@@ -24,7 +24,6 @@
             margin: 0 auto;
         }
 
-        /* Header moderno */
         .header {
             background: white;
             border-radius: 24px;
@@ -43,7 +42,6 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            letter-spacing: -0.02em;
         }
 
         .header h1 i {
@@ -51,27 +49,8 @@
             background: #eef2ff;
             padding: 10px;
             border-radius: 16px;
-            font-size: 1.4rem;
         }
 
-        .online-badge {
-            background: #e6f7e6;
-            color: #10b981;
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border: 1px solid #b7e6b7;
-        }
-
-        .online-badge i {
-            font-size: 0.8rem;
-        }
-
-        /* Tabs moderni */
         .tabs {
             display: flex;
             gap: 6px;
@@ -85,84 +64,35 @@
             border-radius: 40px;
             cursor: pointer;
             font-weight: 500;
-            font-size: 0.95rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-            transition: all 0.2s ease;
             border: 1px solid #e9eef2;
             color: #475569;
+            transition: all 0.2s;
         }
 
         .tab:hover {
             background: #f1f5f9;
-            border-color: #cbd5e1;
         }
 
         .tab.active {
             background: #3b82f6;
             color: white;
             border-color: #3b82f6;
-            box-shadow: 0 4px 12px rgba(59,130,246,0.2);
         }
 
-        /* Sub-tabs */
-        .sub-tabs {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-            border-bottom: 2px solid #e9eef2;
-            padding-bottom: 12px;
-        }
-
-        .sub-tab {
-            padding: 8px 18px;
-            background: transparent;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.9rem;
-            color: #64748b;
-            transition: all 0.2s;
-        }
-
-        .sub-tab:hover {
-            background: #f1f5f9;
-            color: #0f172a;
-        }
-
-        .sub-tab.active {
-            background: #eef2ff;
-            color: #3b82f6;
-            font-weight: 600;
-        }
-
-        .sub-section {
-            display: none;
-        }
-
-        .sub-section.active {
-            display: block;
-        }
-
-        /* Card sezione */
         .section {
             background: white;
             border-radius: 28px;
             padding: 28px;
             margin-bottom: 28px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.02);
             border: 1px solid #e9eef2;
         }
 
         .section h2 {
-            margin-bottom: 22px;
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
             gap: 12px;
             font-size: 1.4rem;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            color: #0f172a;
         }
 
         .section h2 i {
@@ -170,15 +100,34 @@
             background: #eef2ff;
             padding: 8px;
             border-radius: 16px;
-            font-size: 1.2rem;
         }
 
-        /* Form grid uniforme */
+        /* Intestazione fattura */
+        .card-header {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 2px solid #e9eef2;
+        }
+
+        .card-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            color: #0f172a;
+            font-size: 1.1rem;
+        }
+
+        .card-header h3 i {
+            color: #3b82f6;
+        }
+
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 18px;
-            margin-bottom: 24px;
         }
 
         .form-group {
@@ -191,7 +140,6 @@
             font-weight: 500;
             font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 0.02em;
             color: #64748b;
         }
 
@@ -202,7 +150,6 @@
             font-size: 0.95rem;
             transition: all 0.2s;
             background: white;
-            color: #0f172a;
         }
 
         .form-control:focus {
@@ -213,13 +160,55 @@
 
         select.form-control {
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 16px center;
-            background-size: 16px;
         }
 
-        /* Bottoni uniformi */
+        /* Corpo fattura */
+        .card-body {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 2px solid #e9eef2;
+        }
+
+        .card-body h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 16px;
+            border: 2px solid #e9eef2;
+            background: white;
+            margin-bottom: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 16px;
+            background: #f8fafc;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #64748b;
+            border-bottom: 2px solid #e9eef2;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e9eef2;
+        }
+
         .btn {
             padding: 12px 28px;
             border: none;
@@ -227,87 +216,59 @@
             font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 10px;
             background: white;
-            color: #0f172a;
             border: 2px solid #e9eef2;
-        }
-
-        .btn i {
-            font-size: 1rem;
+            transition: all 0.2s;
         }
 
         .btn:hover {
             background: #f8fafc;
-            border-color: #cbd5e1;
             transform: translateY(-1px);
         }
 
         .btn-primary {
             background: #3b82f6;
             color: white;
-            border: 2px solid #3b82f6;
+            border-color: #3b82f6;
         }
 
         .btn-primary:hover {
             background: #2563eb;
-            border-color: #2563eb;
         }
 
         .btn-success {
             background: #10b981;
             color: white;
-            border: 2px solid #10b981;
+            border-color: #10b981;
         }
 
         .btn-success:hover {
             background: #059669;
-            border-color: #059669;
-        }
-
-        .btn-warning {
-            background: #f59e0b;
-            color: white;
-            border: 2px solid #f59e0b;
-        }
-
-        .btn-warning:hover {
-            background: #d97706;
-            border-color: #d97706;
         }
 
         .btn-secondary {
             background: #f1f5f9;
             color: #475569;
-            border: 2px solid #e9eef2;
-        }
-
-        .btn-secondary:hover {
-            background: #e2e8f0;
+            border-color: #e9eef2;
         }
 
         .btn-icon {
             width: 40px;
             height: 40px;
             border-radius: 14px;
-            padding: 0;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             background: white;
             border: 2px solid #e9eef2;
-            color: #475569;
             cursor: pointer;
-            transition: all 0.2s;
         }
 
         .btn-icon:hover {
             background: #f1f5f9;
-            border-color: #cbd5e1;
-            color: #0f172a;
         }
 
         .flex {
@@ -317,270 +278,15 @@
             align-items: center;
         }
 
-        /* Tabelle moderne */
-        .table-responsive {
-            overflow-x: auto;
-            border-radius: 20px;
-            border: 2px solid #e9eef2;
-            background: white;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.95rem;
-        }
-
-        th {
-            text-align: left;
-            padding: 18px 16px;
-            background: #f8fafc;
-            font-weight: 600;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            color: #64748b;
-            border-bottom: 2px solid #e9eef2;
-        }
-
-        td {
-            padding: 16px;
-            border-bottom: 1px solid #e9eef2;
-            color: #1e293b;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover td {
-            background: #f8fafc;
-        }
-
-        .empty-state {
-            text-align: center;
-            color: #94a3b8;
-            padding: 48px;
-            font-style: italic;
-        }
-
-        /* Badge moderni */
-        .badge {
-            padding: 6px 14px;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            display: inline-block;
-            letter-spacing: 0.02em;
-        }
-
-        .badge-success {
-            background: #e6f7e6;
-            color: #10b981;
-            border: 1px solid #b7e6b7;
-        }
-
-        .badge-warning {
-            background: #fff4e5;
-            color: #f59e0b;
-            border: 1px solid #ffe0b3;
-        }
-
         .badge-info {
             background: #eef2ff;
             color: #3b82f6;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 0.9rem;
             border: 1px solid #cddfff;
         }
 
-        .badge-danger {
-            background: #fee9e7;
-            color: #ef4444;
-            border: 1px solid #fccac7;
-        }
-
-        /* Piano dei conti - tree moderno */
-        .conti-livelli {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .sezione {
-            background: #f8fafc;
-            border-radius: 24px;
-            padding: 22px;
-            border: 2px solid;
-        }
-
-        .sezione[data-sezione="attivo"] { border-color: #10b981; }
-        .sezione[data-sezione="passivo"] { border-color: #f59e0b; }
-        .sezione[data-sezione="patrimonioNetto"] { border-color: #8b5cf6; }
-        .sezione[data-sezione="costi"] { border-color: #ef4444; }
-        .sezione[data-sezione="ricavi"] { border-color: #3b82f6; }
-
-        .sezione-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            padding-bottom: 16px;
-            border-bottom: 2px solid #e9eef2;
-        }
-
-        .sezione-titolo {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .sezione-titolo h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-
-        .sezione-codice {
-            background: #1e293b;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .categorie-container {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-left: 20px;
-        }
-
-        .categoria {
-            background: white;
-            border-radius: 20px;
-            padding: 18px;
-            border: 2px solid #e9eef2;
-        }
-
-        .categoria-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 14px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e9eef2;
-        }
-
-        .categoria-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .categoria-info h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .categoria-codice {
-            background: #3b82f6;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .sottocategorie-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 12px;
-            margin-left: 16px;
-        }
-
-        .sottocategoria {
-            background: #f8fafc;
-            border-radius: 18px;
-            padding: 16px;
-            border: 2px solid #e9eef2;
-        }
-
-        .sottocategoria-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #e9eef2;
-        }
-
-        .sottocategoria-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .sottocategoria-info h5 {
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        .sottocategoria-codice {
-            background: #94a3b8;
-            color: white;
-            padding: 3px 10px;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-
-        .conti-lista {
-            list-style: none;
-        }
-
-        .conti-lista li {
-            padding: 10px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #e9eef2;
-        }
-
-        .conti-lista li:last-child {
-            border-bottom: none;
-        }
-
-        .conto-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .conto-codice {
-            font-family: 'SF Mono', monospace;
-            font-size: 0.8rem;
-            color: #64748b;
-            background: #f1f5f9;
-            padding: 4px 8px;
-            border-radius: 8px;
-        }
-
-        .conto-valore {
-            font-weight: 600;
-            color: #0f172a;
-        }
-
-        .edit-conto {
-            color: #94a3b8;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-
-        .edit-conto:hover {
-            color: #3b82f6;
-        }
-
-        /* Modal moderno */
         .modal {
             display: none;
             position: fixed;
@@ -607,318 +313,118 @@
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            border: 2px solid #e9eef2;
-        }
-
-        .modal-content h3 {
-            font-size: 1.4rem;
-            margin-bottom: 24px;
-            font-weight: 600;
-        }
-
-        /* Card di import */
-        .import-card {
-            background: #f8fafc;
-            border-radius: 24px;
-            padding: 32px;
-            text-align: center;
-            border: 3px dashed #cbd5e1;
-            transition: all 0.2s;
-        }
-
-        .import-card:hover {
-            border-color: #3b82f6;
-            background: #eef2ff;
-        }
-
-        .import-card i {
-            font-size: 48px;
-            color: #3b82f6;
-            margin-bottom: 16px;
-        }
-
-        /* Stats cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 28px;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 24px;
-            padding: 22px;
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            border: 2px solid #e9eef2;
-            transition: all 0.2s;
-        }
-
-        .stat-card:hover {
-            border-color: #3b82f6;
-            box-shadow: 0 8px 20px rgba(59,130,246,0.1);
-        }
-
-        .stat-card i {
-            font-size: 32px;
-            color: #3b82f6;
-            background: #eef2ff;
-            padding: 16px;
-            border-radius: 20px;
-        }
-
-        .stat-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.02em;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #0f172a;
-            line-height: 1.2;
-        }
-
-        /* Report period */
-        .report-periodo {
-            background: #f8fafc;
-            border-radius: 20px;
-            padding: 22px;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            align-items: flex-end;
-            border: 2px solid #e9eef2;
-            margin-bottom: 24px;
-        }
-
-        /* Partite */
-        .partita {
-            border-left: 6px solid #f59e0b;
-            background: #fffaf0;
-        }
-
-        .partita-pagata {
-            border-left: 6px solid #10b981;
-            background: #f0fdf4;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            body { padding: 16px; }
-            .header { flex-direction: column; align-items: flex-start; }
-            .form-grid { grid-template-columns: 1fr; }
-            .sottocategorie-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header moderno -->
         <div class="header">
-            <h1>
-                <i class="fas fa-calculator"></i>
-                Contabilità Moderna
-            </h1>
-            <span class="online-badge">
-                <i class="fas fa-circle"></i> Online
-            </span>
+            <h1><i class="fas fa-calculator"></i> Contabilità Fatture Passive</h1>
+            <span class="badge-info"><i class="fas fa-circle"></i> Online</span>
         </div>
 
-        <!-- Tabs principali -->
         <div class="tabs">
-            <div class="tab active" onclick="cambiaTab('dashboard')"><i class="fas fa-home"></i> Dashboard</div>
-            <div class="tab" onclick="cambiaTab('conti')"><i class="fas fa-sitemap"></i> Piano Conti</div>
-            <div class="tab" onclick="cambiaTab('passive')"><i class="fas fa-file-invoice"></i> Fatture Passive</div>
-            <div class="tab" onclick="cambiaTab('attive')"><i class="fas fa-file-invoice"></i> Fatture Attive</div>
-            <div class="tab" onclick="cambiaTab('coge')"><i class="fas fa-book"></i> Contabilità</div>
-            <div class="tab" onclick="cambiaTab('iva')"><i class="fas fa-percent"></i> IVA</div>
-            <div class="tab" onclick="cambiaTab('bancario')"><i class="fas fa-university"></i> Bancario</div>
-            <div class="tab" onclick="cambiaTab('bilancio')"><i class="fas fa-print"></i> Bilancio</div>
-        </div>
-
-        <!-- DASHBOARD -->
-        <div id="dashboard-view" class="section">
-            <h2><i class="fas fa-home"></i> Dashboard</h2>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <i class="fas fa-euro-sign"></i>
-                    <div class="stat-info">
-                        <span class="stat-label">Totale Attivo</span>
-                        <span class="stat-value" id="dashboardAttivo">€ 0,00</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-credit-card"></i>
-                    <div class="stat-info">
-                        <span class="stat-label">Totale Passivo</span>
-                        <span class="stat-value" id="dashboardPassivo">€ 0,00</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-chart-line"></i>
-                    <div class="stat-info">
-                        <span class="stat-label">Patrimonio Netto</span>
-                        <span class="stat-value" id="dashboardNetto">€ 0,00</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-percent"></i>
-                    <div class="stat-info">
-                        <span class="stat-label">IVA Netta</span>
-                        <span class="stat-value" id="dashboardIvaNetto">€ 0,00</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- PIANO DEI CONTI -->
-        <div id="conti-view" class="section" style="display: none;">
-            <h2><i class="fas fa-sitemap"></i> Piano dei Conti 4 Livelli</h2>
-            
-            <div class="flex" style="margin-bottom: 24px;">
-                <button class="btn btn-primary" onclick="mostraModal('categoria')"><i class="fas fa-plus"></i> Categoria</button>
-                <button class="btn btn-primary" onclick="mostraModal('sottocategoria')"><i class="fas fa-plus"></i> Sottocategoria</button>
-                <button class="btn btn-primary" onclick="mostraModal('conto')"><i class="fas fa-plus"></i> Conto</button>
-                <button class="btn btn-secondary" onclick="resetContiDefault()"><i class="fas fa-undo"></i> Reset</button>
-            </div>
-            
-            <div class="conti-livelli" id="pianoContiContainer"></div>
-            
-            <div class="report-periodo" style="margin-top: 24px; text-align: center;">
-                <strong>Stato Patrimoniale:</strong> 
-                Attività <span id="spAttivita">€ 0,00</span> = 
-                Passività <span id="spPassivita">€ 0,00</span> + 
-                Patrimonio Netto <span id="spNetto">€ 0,00</span>
-                <span id="quadratura" style="margin-left: 12px; font-weight: 600;">⚖️</span>
-            </div>
+            <div class="tab active" onclick="cambiaTab('passive')">Fatture Passive</div>
+            <div class="tab" onclick="cambiaTab('conti')">Piano dei Conti</div>
         </div>
 
         <!-- FATTURE PASSIVE -->
-        <div id="passive-view" class="section" style="display: none;">
-            <h2><i class="fas fa-file-invoice"></i> Fatture Passive</h2>
-            
-            <div class="sub-tabs">
-                <div class="sub-tab active" onclick="cambiaSubTab('passive', 'inserimento')">➕ Inserimento</div>
-                <div class="sub-tab" onclick="cambiaSubTab('passive', 'import')">📂 Import XML</div>
-                <div class="sub-tab" onclick="cambiaSubTab('passive', 'lista')">📋 Elenco</div>
-            </div>
-            
-            <div id="passive-inserimento" class="sub-section active">
+        <div id="passive-view" class="section">
+            <h2><i class="fas fa-file-invoice"></i> Inserimento Fattura Passiva</h2>
+
+            <!-- INTESTAZIONE FATTURA -->
+            <div class="card-header">
+                <h3><i class="fas fa-info-circle"></i> Dati Testata</h3>
                 <div class="form-grid">
-                    <div class="form-group"><label>Numero</label><input type="text" id="passNumero" class="form-control" placeholder="FT-2024-001"></div>
-                    <div class="form-group"><label>Data</label><input type="date" id="passData" class="form-control"></div>
-                    <div class="form-group"><label>Fornitore</label><input type="text" id="passFornitore" class="form-control" placeholder="Ragione sociale"></div>
-                    <div class="form-group"><label>Partita IVA</label><input type="text" id="passPiva" class="form-control" placeholder="01234567890" onchange="cercaFornitoreDaPiva()"></div>
-                    <div class="form-group"><label>Imponibile</label><input type="number" id="passImponibile" class="form-control" step="0.01" placeholder="0.00"></div>
-                    <div class="form-group"><label>Aliquota IVA</label><select id="passAliquota" class="form-control"><option value="22">22%</option></select></div>
-                    <div class="form-group"><label>Conto Costo</label><select id="passConto" class="form-control"></select></div>
+                    <div class="form-group">
+                        <label>Numero fattura *</label>
+                        <input type="text" id="fatturaNumero" class="form-control" placeholder="FT-2024-001" value="FT-001">
+                    </div>
+                    <div class="form-group">
+                        <label>Data *</label>
+                        <input type="date" id="fatturaData" class="form-control" value="2026-02-21">
+                    </div>
+                    <div class="form-group">
+                        <label>Fornitore *</label>
+                        <input type="text" id="fatturaFornitore" class="form-control" placeholder="Ragione sociale" value="Fornitore Rossi">
+                    </div>
+                    <div class="form-group">
+                        <label>Partita IVA *</label>
+                        <input type="text" id="fatturaPiva" class="form-control" placeholder="01234567890" value="12345678901" onchange="cercaFornitore()">
+                    </div>
                 </div>
-                
-                <div id="passFornitoreEsistente" class="badge badge-info" style="display: none; margin-bottom: 16px;"></div>
-                
-                <div class="flex">
-                    <button class="btn btn-success" onclick="inserisciFatturaPassiva()"><i class="fas fa-save"></i> Salva</button>
-                    <button class="btn btn-secondary" onclick="resetFormPassiva()"><i class="fas fa-undo"></i> Reset</button>
-                </div>
+                <div id="fornitoreInfo" class="badge-info" style="margin-top: 16px; display: none;"></div>
             </div>
-            
-            <div id="passive-import" class="sub-section">
-                <div class="import-card">
-                    <i class="fas fa-file-code"></i>
-                    <p>Seleziona file XML fatturaPA</p>
-                    <input type="file" id="passXmlInput" accept=".xml" style="display: none;" onchange="handleXMLPassive(this.files[0])">
-                    <button class="btn btn-primary" onclick="document.getElementById('passXmlInput').click()"><i class="fas fa-upload"></i> Scegli XML</button>
-                    <div id="passXmlPreview" class="form-control" style="margin-top: 16px;">Nessun file</div>
-                </div>
-                <div id="passXmlDettaglio" style="display: none; margin-top: 20px;"></div>
-            </div>
-            
-            <div id="passive-lista" class="sub-section">
+
+            <!-- CORPO FATTURA -->
+            <div class="card-body">
+                <h3><i class="fas fa-list"></i> Dettaglio Linee</h3>
+                
                 <div class="table-responsive">
-                    <table>
-                        <thead><tr><th>Data</th><th>Fornitore</th><th>Imponibile</th><th>IVA</th><th>Totale</th><th>Stato</th></tr></thead>
-                        <tbody id="tabellaFatturePassive"></tbody>
+                    <table id="lineeTable">
+                        <thead>
+                            <tr>
+                                <th>Descrizione</th>
+                                <th>Quantità</th>
+                                <th>Prezzo unitario</th>
+                                <th>% IVA</th>
+                                <th>Centro di costo</th>
+                                <th>Importo</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="lineeBody">
+                            <!-- Righe aggiunte dinamicamente -->
+                        </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
 
-        <!-- FATTURE ATTIVE (struttura identica) -->
-        <div id="attive-view" class="section" style="display: none;">
-            <h2><i class="fas fa-file-invoice"></i> Fatture Attive</h2>
-            <div class="sub-tabs">
-                <div class="sub-tab active" onclick="cambiaSubTab('attive', 'inserimento')">➕ Inserimento</div>
-                <div class="sub-tab" onclick="cambiaSubTab('attive', 'import')">📂 Import XML</div>
-                <div class="sub-tab" onclick="cambiaSubTab('attive', 'lista')">📋 Elenco</div>
-            </div>
-            <div id="attive-inserimento" class="sub-section active">
-                <div class="form-grid">
-                    <div class="form-group"><label>Numero</label><input type="text" id="attNumero" class="form-control" placeholder="FT-2024-001"></div>
-                    <div class="form-group"><label>Data</label><input type="date" id="attData" class="form-control"></div>
-                    <div class="form-group"><label>Cliente</label><input type="text" id="attCliente" class="form-control" placeholder="Ragione sociale"></div>
-                    <div class="form-group"><label>Partita IVA</label><input type="text" id="attPiva" class="form-control" placeholder="01234567890"></div>
-                    <div class="form-group"><label>Imponibile</label><input type="number" id="attImponibile" class="form-control" step="0.01" placeholder="0.00"></div>
-                    <div class="form-group"><label>Aliquota IVA</label><select id="attAliquota" class="form-control"><option value="22">22%</option></select></div>
-                    <div class="form-group"><label>Conto Ricavo</label><select id="attConto" class="form-control"></select></div>
-                </div>
-                <div class="flex">
-                    <button class="btn btn-success" onclick="inserisciFatturaAttiva()"><i class="fas fa-save"></i> Salva</button>
-                    <button class="btn btn-secondary" onclick="resetFormAttiva()"><i class="fas fa-undo"></i> Reset</button>
+                <div class="flex" style="justify-content: space-between; align-items: center;">
+                    <button class="btn btn-secondary" onclick="aggiungiRiga()">
+                        <i class="fas fa-plus"></i> Aggiungi riga
+                    </button>
+                    <div style="font-size: 1.2rem; font-weight: 600;">
+                        Totale: <span id="totaleFattura">€ 0,00</span>
+                    </div>
                 </div>
             </div>
-            <div id="attive-import" class="sub-section">...</div>
-            <div id="attive-lista" class="sub-section">
-                <div class="table-responsive">
-                    <table><thead><tr><th>Data</th><th>Cliente</th><th>Imponibile</th><th>IVA</th><th>Totale</th><th>Stato</th></tr></thead><tbody id="tabellaFattureAttive"></tbody></table>
-                </div>
+
+            <!-- PULSANTI FINALI -->
+            <div class="flex" style="justify-content: flex-end;">
+                <button class="btn btn-success" onclick="salvaFattura()">
+                    <i class="fas fa-save"></i> Salva fattura
+                </button>
+                <button class="btn btn-secondary" onclick="resettaFattura()">
+                    <i class="fas fa-undo"></i> Reset
+                </button>
             </div>
+
+            <!-- MESSAGGIO CONFERMA -->
+            <div id="messaggioConferma" style="display: none; margin-top: 20px; padding: 16px; background: #e6f7e6; border-radius: 16px; color: #10b981; font-weight: 500;"></div>
         </div>
 
-        <!-- MODAL NUOVA CATEGORIA -->
-        <div id="modalNuovaCategoria" class="modal">
-            <div class="modal-content">
-                <h3><i class="fas fa-folder-plus"></i> Nuova Categoria</h3>
-                <div class="form-group"><label>Sezione</label><select id="catSezione" class="form-control"><option value="attivo">ATTIVO</option><option value="passivo">PASSIVO</option><option value="patrimonioNetto">PATRIMONIO NETTO</option><option value="costi">COSTI</option><option value="ricavi">RICAVI</option></select></div>
-                <div class="form-group"><label>Nome</label><input type="text" id="catNome" class="form-control" placeholder="Disponibilità liquide"></div>
-                <div class="form-group"><label>Codice</label><input type="text" id="catCodice" class="form-control" placeholder="10"></div>
-                <div class="flex"><button class="btn btn-success" onclick="salvaNuovaCategoria()"><i class="fas fa-check"></i> Salva</button><button class="btn btn-secondary" onclick="chiudiModal()">Annulla</button></div>
-            </div>
+        <!-- PIANO DEI CONTI (semplificato) -->
+        <div id="conti-view" class="section" style="display: none;">
+            <h2><i class="fas fa-sitemap"></i> Centri di costo</h2>
+            <div id="listaCentriCosto" style="padding: 20px; background: #f8fafc; border-radius: 16px;"></div>
         </div>
+    </div>
 
-        <!-- MODAL NUOVA SOTTOCATEGORIA -->
-        <div id="modalNuovaSottocategoria" class="modal">
-            <div class="modal-content">
-                <h3><i class="fas fa-folder-open"></i> Nuova Sottocategoria</h3>
-                <div class="form-group"><label>Categoria</label><select id="subCategoria" class="form-control"></select></div>
-                <div class="form-group"><label>Nome</label><input type="text" id="subNome" class="form-control" placeholder="Banche c/c"></div>
-                <div class="form-group"><label>Codice</label><input type="text" id="subCodice" class="form-control" placeholder="10.01"></div>
-                <div class="flex"><button class="btn btn-success" onclick="salvaNuovaSottocategoria()">Salva</button><button class="btn btn-secondary" onclick="chiudiModal()">Annulla</button></div>
+    <!-- MODALE NUOVO CENTRO DI COSTO -->
+    <div id="modalCentroCosto" class="modal">
+        <div class="modal-content">
+            <h3>Nuovo centro di costo</h3>
+            <div class="form-group">
+                <label>Codice</label>
+                <input type="text" id="nuovoCentroCodice" class="form-control" placeholder="CDC-001">
             </div>
-        </div>
-
-        <!-- MODAL NUOVO CONTO -->
-        <div id="modalNuovoConto" class="modal">
-            <div class="modal-content">
-                <h3><i class="fas fa-file-invoice"></i> Nuovo Conto</h3>
-                <div class="form-group"><label>Sottocategoria</label><select id="contoSottocategoria" class="form-control"></select></div>
-                <div class="form-group"><label>Nome</label><input type="text" id="contoNome" class="form-control" placeholder="Banca Intesa"></div>
-                <div class="form-group"><label>Codice</label><input type="text" id="contoCodice" class="form-control" placeholder="10.01.001"></div>
-                <div class="form-group"><label>Tipo</label><select id="contoTipo" class="form-control"><option value="generico">Generico</option><option value="fornitore">Fornitore</option><option value="cliente">Cliente</option><option value="banca">Banca</option></select></div>
-                <div class="form-group"><label>Partita IVA</label><input type="text" id="contoPiva" class="form-control" placeholder="01234567890"></div>
-                <div class="flex"><button class="btn btn-success" onclick="salvaNuovoConto()">Salva</button><button class="btn btn-secondary" onclick="chiudiModal()">Annulla</button></div>
+            <div class="form-group">
+                <label>Descrizione</label>
+                <input type="text" id="nuovoCentroDescrizione" class="form-control" placeholder="Produzione">
+            </div>
+            <div class="flex">
+                <button class="btn btn-success" onclick="salvaCentroCosto()">Salva</button>
+                <button class="btn btn-secondary" onclick="chiudiModal()">Annulla</button>
             </div>
         </div>
     </div>
@@ -927,233 +433,256 @@
         // ============================================
         // DATI DI ESEMPIO
         // ============================================
-        let categorie = [
-            { id: 'c1', sezione: 'attivo', nome: 'Disponibilità liquide', codice: '10' },
-            { id: 'c2', sezione: 'attivo', nome: 'Crediti', codice: '11' },
-            { id: 'c3', sezione: 'passivo', nome: 'Debiti verso fornitori', codice: '20' }
+        let lineeFattura = [];
+        let centriCosto = [
+            { id: 'c1', codice: 'CDC-001', descrizione: 'Produzione' },
+            { id: 'c2', codice: 'CDC-002', descrizione: 'Amministrazione' },
+            { id: 'c3', codice: 'CDC-003', descrizione: 'Vendite' }
         ];
-        
-        let sottocategorie = [
-            { id: 's1', categoriaId: 'c1', nome: 'Banche c/c', codice: '10.01' },
-            { id: 's2', categoriaId: 'c1', nome: 'Cassa', codice: '10.02' },
-            { id: 's3', categoriaId: 'c3', nome: 'Fornitori', codice: '20.01' }
+        let contiFornitori = [
+            { id: 'f1', nome: 'Fornitore Rossi', piva: '12345678901' },
+            { id: 'f2', nome: 'Fornitore Bianchi', piva: '98765432109' }
         ];
-        
-        let conti = [
-            { id: 'ct1', sottocategoriaId: 's1', nome: 'Banca Intesa', codice: '10.01.001', tipo: 'banca', piva: '' },
-            { id: 'ct2', sottocategoriaId: 's1', nome: 'Banca Unicredit', codice: '10.01.002', tipo: 'banca', piva: '' },
-            { id: 'ct3', sottocategoriaId: 's3', nome: 'Fornitore Rossi', codice: '20.01.001', tipo: 'fornitore', piva: '12345678901' },
-            { id: 'ct4', sottocategoriaId: 's3', nome: 'Fornitore Bianchi', codice: '20.01.002', tipo: 'fornitore', piva: '98765432109' }
-        ];
-        
-        let fatture = [];
-        let pagamenti = [];
+
+        // ============================================
+        // INIZIALIZZAZIONE
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Aggiungi una riga vuota all'avvio
+            aggiungiRiga();
+            aggiornaListaCentriCosto();
+        });
 
         // ============================================
         // FUNZIONI TAB
         // ============================================
         function cambiaTab(tab) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.section').forEach(s => s.style.display = 'none'));
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
             document.querySelector(`.tab[onclick*="${tab}"]`).classList.add('active');
             document.getElementById(tab + '-view').style.display = 'block';
+        }
+
+        // ============================================
+        // GESTIONE LINEE FATTURA
+        // ============================================
+        function aggiungiRiga() {
+            const nuovaRiga = {
+                id: Date.now() + Math.random(),
+                descrizione: '',
+                quantita: 1,
+                prezzo: 0,
+                iva: 22,
+                centroId: ''
+            };
+            lineeFattura.push(nuovaRiga);
+            aggiornaTabelleLinee();
+        }
+
+        function rimuoviRiga(id) {
+            lineeFattura = lineeFattura.filter(l => l.id !== id);
+            aggiornaTabelleLinee();
+        }
+
+        function aggiornaRiga(id, campo, valore) {
+            const riga = lineeFattura.find(l => l.id === id);
+            if (riga) {
+                riga[campo] = campo === 'quantita' || campo === 'prezzo' || campo === 'iva' ? parseFloat(valore) || 0 : valore;
+                aggiornaTabelleLinee();
+            }
+        }
+
+        function calcolaImporto(riga) {
+            return (riga.quantita || 0) * (riga.prezzo || 0);
+        }
+
+        function calcolaTotale() {
+            return lineeFattura.reduce((sum, riga) => sum + calcolaImporto(riga), 0);
+        }
+
+        function aggiornaTabelleLinee() {
+            const tbody = document.getElementById('lineeBody');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
             
-            if (tab === 'conti') visualizzaPianoConti();
-        }
+            lineeFattura.forEach(riga => {
+                const tr = document.createElement('tr');
+                const importo = calcolaImporto(riga);
+                
+                tr.innerHTML = `
+                    <td><input type="text" class="form-control" value="${riga.descrizione}" placeholder="Descrizione" onchange="aggiornaRiga(${riga.id}, 'descrizione', this.value)"></td>
+                    <td><input type="number" class="form-control" value="${riga.quantita}" min="0" step="0.01" onchange="aggiornaRiga(${riga.id}, 'quantita', this.value)"></td>
+                    <td><input type="number" class="form-control" value="${riga.prezzo}" min="0" step="0.01" onchange="aggiornaRiga(${riga.id}, 'prezzo', this.value)"></td>
+                    <td>
+                        <select class="form-control" onchange="aggiornaRiga(${riga.id}, 'iva', this.value)">
+                            <option value="22" ${riga.iva === 22 ? 'selected' : ''}>22%</option>
+                            <option value="10" ${riga.iva === 10 ? 'selected' : ''}>10%</option>
+                            <option value="5" ${riga.iva === 5 ? 'selected' : ''}>5%</option>
+                            <option value="4" ${riga.iva === 4 ? 'selected' : ''}>4%</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" onchange="aggiornaRiga(${riga.id}, 'centroId', this.value)">
+                            <option value="">Seleziona centro</option>
+                            ${centriCosto.map(c => `<option value="${c.id}" ${riga.centroId === c.id ? 'selected' : ''}>${c.codice} - ${c.descrizione}</option>`).join('')}
+                        </select>
+                    </td>
+                    <td>€ ${importo.toFixed(2)}</td>
+                    <td><button class="btn-icon" onclick="rimuoviRiga(${riga.id})"><i class="fas fa-trash"></i></button></td>
+                `;
+                
+                tbody.appendChild(tr);
+            });
 
-        function cambiaSubTab(mainTab, subTab) {
-            document.querySelectorAll(`#${mainTab}-view .sub-tab`).forEach(t => t.classList.remove('active'));
-            document.querySelectorAll(`#${mainTab}-view .sub-section`).forEach(s => s.style.display = 'none');
-            document.querySelector(`#${mainTab}-view .sub-tab[onclick*="${subTab}"]`).classList.add('active');
-            document.getElementById(`${mainTab}-${subTab}`).style.display = 'block';
+            document.getElementById('totaleFattura').textContent = `€ ${calcolaTotale().toFixed(2)}`;
         }
 
         // ============================================
-        // PIANO DEI CONTI
+        // RICERCA FORNITORE
         // ============================================
-        function visualizzaPianoConti() {
-            const container = document.getElementById('pianoContiContainer');
+        function cercaFornitore() {
+            const piva = document.getElementById('fatturaPiva').value;
+            const fornitore = contiFornitori.find(f => f.piva === piva);
+            const infoDiv = document.getElementById('fornitoreInfo');
+            
+            if (fornitore) {
+                infoDiv.style.display = 'block';
+                infoDiv.innerHTML = `✓ Fornitore trovato: ${fornitore.nome}`;
+                document.getElementById('fatturaFornitore').value = fornitore.nome;
+            } else {
+                infoDiv.style.display = 'none';
+            }
+        }
+
+        // ============================================
+        // SALVATAGGIO FATTURA
+        // ============================================
+        function salvaFattura() {
+            // Validazione
+            if (!document.getElementById('fatturaNumero').value) {
+                alert('Inserire il numero fattura');
+                return;
+            }
+            
+            if (lineeFattura.length === 0) {
+                alert('Aggiungere almeno una riga');
+                return;
+            }
+
+            // Costruisci oggetto fattura
+            const fattura = {
+                numero: document.getElementById('fatturaNumero').value,
+                data: document.getElementById('fatturaData').value,
+                fornitore: document.getElementById('fatturaFornitore').value,
+                piva: document.getElementById('fatturaPiva').value,
+                linee: lineeFattura.map(l => ({
+                    ...l,
+                    importo: calcolaImporto(l)
+                })),
+                totale: calcolaTotale()
+            };
+
+            // Mostra conferma
+            const msgDiv = document.getElementById('messaggioConferma');
+            msgDiv.style.display = 'block';
+            msgDiv.innerHTML = `✅ Fattura ${fattura.numero} salvata con successo! Totale: € ${fattura.totale.toFixed(2)}`;
+            
+            console.log('Fattura salvata:', fattura);
+            
+            // Reset dopo 3 secondi
+            setTimeout(() => {
+                msgDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        function resettaFattura() {
+            if (confirm('Resettare tutti i dati?')) {
+                document.getElementById('fatturaNumero').value = 'FT-001';
+                document.getElementById('fatturaData').value = new Date().toISOString().split('T')[0];
+                document.getElementById('fatturaFornitore').value = 'Fornitore Rossi';
+                document.getElementById('fatturaPiva').value = '12345678901';
+                document.getElementById('fornitoreInfo').style.display = 'none';
+                
+                lineeFattura = [];
+                aggiungiRiga();
+            }
+        }
+
+        // ============================================
+        // CENTRI DI COSTO
+        // ============================================
+        function aggiornaListaCentriCosto() {
+            const container = document.getElementById('listaCentriCosto');
             if (!container) return;
             
-            let html = '';
-            const sezioni = { attivo: 'ATTIVO', passivo: 'PASSIVO', patrimonioNetto: 'PATRIMONIO NETTO', costi: 'COSTI', ricavi: 'RICAVI' };
+            let html = '<div class="flex" style="margin-bottom: 16px;"><button class="btn btn-primary" onclick="mostraModal()"><i class="fas fa-plus"></i> Nuovo centro</button></div>';
             
-            Object.keys(sezioni).forEach(sezioneKey => {
-                const catSezione = categorie.filter(c => c.sezione === sezioneKey);
-                if (catSezione.length === 0) return;
-                
-                html += `<div class="sezione" data-sezione="${sezioneKey}">`;
-                html += `<div class="sezione-header"><div class="sezione-titolo"><h3>${sezioni[sezioneKey]}</h3><span class="sezione-codice">${sezioneKey === 'attivo' ? '1' : sezioneKey === 'passivo' ? '2' : '3'}</span></div><span class="sezione-totale">€ 0,00</span></div>`;
-                html += `<div class="categorie-container">`;
-                
-                catSezione.forEach(cat => {
-                    html += `<div class="categoria">`;
-                    html += `<div class="categoria-header"><div class="categoria-info"><h4>${cat.nome}</h4><span class="categoria-codice">${cat.codice}</span><i class="fas fa-edit edit-conto" onclick="modificaStruttura('categoria','${cat.id}')"></i></div><span class="categoria-totale">€ 0,00</span></div>`;
-                    
-                    const subCat = sottocategorie.filter(s => s.categoriaId === cat.id);
-                    if (subCat.length > 0) {
-                        html += `<div class="sottocategorie-container">`;
-                        subCat.forEach(sub => {
-                            html += `<div class="sottocategoria">`;
-                            html += `<div class="sottocategoria-header"><div class="sottocategoria-info"><h5>${sub.nome}</h5><span class="sottocategoria-codice">${sub.codice}</span><i class="fas fa-edit edit-conto" onclick="modificaStruttura('sottocategoria','${sub.id}')"></i></div><span class="sottocategoria-totale">€ 0,00</span></div>`;
-                            
-                            const contiSub = conti.filter(c => c.sottocategoriaId === sub.id);
-                            if (contiSub.length > 0) {
-                                html += `<ul class="conti-lista">`;
-                                contiSub.forEach(conto => {
-                                    html += `<li><div class="conto-info"><span class="conto-codice">${conto.codice}</span><span>${conto.nome}</span><i class="fas fa-edit edit-conto" onclick="modificaStruttura('conto','${conto.id}')"></i></div><span class="conto-valore">€ 0,00</span></li>`;
-                                });
-                                html += `</ul>`;
-                            }
-                            html += `</div>`;
-                        });
-                        html += `</div>`;
-                    }
-                    html += `</div>`;
+            if (centriCosto.length === 0) {
+                html += '<p class="empty-state">Nessun centro di costo</p>';
+            } else {
+                html += '<table><tr><th>Codice</th><th>Descrizione</th><th></th></tr>';
+                centriCosto.forEach(c => {
+                    html += `<tr><td>${c.codice}</td><td>${c.descrizione}</td><td><button class="btn-icon" onclick="eliminaCentro('${c.id}')"><i class="fas fa-trash"></i></button></td></tr>`;
                 });
-                
-                html += `</div></div>`;
-            });
+                html += '</table>';
+            }
             
             container.innerHTML = html;
         }
 
-        function modificaStruttura(tipo, id) {
-            alert(`Modifica ${tipo} (in sviluppo)`);
-        }
-
-        // ============================================
-        // MODAL
-        // ============================================
-        function mostraModal(tipo) {
-            if (tipo === 'categoria') {
-                document.getElementById('modalNuovaCategoria').classList.add('active');
-            } else if (tipo === 'sottocategoria') {
-                let select = document.getElementById('subCategoria');
-                select.innerHTML = '';
-                categorie.forEach(c => select.innerHTML += `<option value="${c.id}">${c.nome}</option>`);
-                document.getElementById('modalNuovaSottocategoria').classList.add('active');
-            } else if (tipo === 'conto') {
-                let select = document.getElementById('contoSottocategoria');
-                select.innerHTML = '';
-                sottocategorie.forEach(s => select.innerHTML += `<option value="${s.id}">${s.nome}</option>`);
-                document.getElementById('modalNuovoConto').classList.add('active');
-            }
+        function mostraModal() {
+            document.getElementById('modalCentroCosto').classList.add('active');
         }
 
         function chiudiModal() {
-            document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+            document.getElementById('modalCentroCosto').classList.remove('active');
+            document.getElementById('nuovoCentroCodice').value = '';
+            document.getElementById('nuovoCentroDescrizione').value = '';
         }
 
-        function salvaNuovaCategoria() {
-            categorie.push({
+        function salvaCentroCosto() {
+            const codice = document.getElementById('nuovoCentroCodice').value;
+            const descrizione = document.getElementById('nuovoCentroDescrizione').value;
+            
+            if (!codice || !descrizione) {
+                alert('Compila tutti i campi');
+                return;
+            }
+            
+            centriCosto.push({
                 id: 'c' + Date.now(),
-                sezione: document.getElementById('catSezione').value,
-                nome: document.getElementById('catNome').value,
-                codice: document.getElementById('catCodice').value
+                codice,
+                descrizione
             });
+            
             chiudiModal();
-            visualizzaPianoConti();
+            aggiornaListaCentriCosto();
+            aggiornaTabelleLinee(); // Aggiorna dropdown nelle righe
         }
 
-        function salvaNuovaSottocategoria() {
-            sottocategorie.push({
-                id: 's' + Date.now(),
-                categoriaId: document.getElementById('subCategoria').value,
-                nome: document.getElementById('subNome').value,
-                codice: document.getElementById('subCodice').value
-            });
-            chiudiModal();
-            visualizzaPianoConti();
-        }
-
-        function salvaNuovoConto() {
-            conti.push({
-                id: 'ct' + Date.now(),
-                sottocategoriaId: document.getElementById('contoSottocategoria').value,
-                nome: document.getElementById('contoNome').value,
-                codice: document.getElementById('contoCodice').value,
-                tipo: document.getElementById('contoTipo').value,
-                piva: document.getElementById('contoPiva').value
-            });
-            chiudiModal();
-            visualizzaPianoConti();
-        }
-
-        function resetContiDefault() {
-            if (confirm('Tornare ai conti predefiniti?')) location.reload();
-        }
-
-        // ============================================
-        // FUNZIONI FATTURE
-        // ============================================
-        function cercaFornitoreDaPiva() {
-            let piva = document.getElementById('passPiva').value;
-            let fornitore = conti.find(c => c.piva === piva && c.tipo === 'fornitore');
-            if (fornitore) {
-                document.getElementById('passFornitoreEsistente').style.display = 'block';
-                document.getElementById('passFornitoreEsistente').innerHTML = `✓ Fornitore esistente: ${fornitore.nome}`;
-                document.getElementById('passFornitore').value = fornitore.nome;
-            } else {
-                document.getElementById('passFornitoreEsistente').style.display = 'none';
+        function eliminaCentro(id) {
+            if (confirm('Eliminare questo centro di costo?')) {
+                centriCosto = centriCosto.filter(c => c.id !== id);
+                aggiornaListaCentriCosto();
+                aggiornaTabelleLinee();
             }
         }
 
-        function resetFormPassiva() {
-            document.getElementById('passNumero').value = '';
-            document.getElementById('passData').value = new Date().toISOString().split('T')[0];
-            document.getElementById('passFornitore').value = '';
-            document.getElementById('passPiva').value = '';
-            document.getElementById('passImponibile').value = '';
-            document.getElementById('passFornitoreEsistente').style.display = 'none';
-        }
-
-        function inserisciFatturaPassiva() {
-            alert('Fattura salvata (demo)');
-            resetFormPassiva();
-        }
-
-        function resetFormAttiva() {
-            document.getElementById('attNumero').value = '';
-            document.getElementById('attData').value = new Date().toISOString().split('T')[0];
-            document.getElementById('attCliente').value = '';
-            document.getElementById('attPiva').value = '';
-            document.getElementById('attImponibile').value = '';
-        }
-
-        function inserisciFatturaAttiva() {
-            alert('Fattura salvata (demo)');
-            resetFormAttiva();
-        }
-
-        function handleXMLPassive(file) {
-            document.getElementById('passXmlPreview').innerHTML = `File caricato: ${file.name}`;
-        }
-
-        // Inizializzazione
-        document.addEventListener('DOMContentLoaded', function() {
-            let oggi = new Date().toISOString().split('T')[0];
-            document.getElementById('passData').value = oggi;
-            document.getElementById('attData').value = oggi;
-            visualizzaPianoConti();
-        });
-
-        // Esponi funzioni
+        // ============================================
+        // ESPONI FUNZIONI GLOBALI
+        // ============================================
         window.cambiaTab = cambiaTab;
-        window.cambiaSubTab = cambiaSubTab;
+        window.aggiungiRiga = aggiungiRiga;
+        window.rimuoviRiga = rimuoviRiga;
+        window.aggiornaRiga = aggiornaRiga;
+        window.salvaFattura = salvaFattura;
+        window.resettaFattura = resettaFattura;
+        window.cercaFornitore = cercaFornitore;
         window.mostraModal = mostraModal;
         window.chiudiModal = chiudiModal;
-        window.salvaNuovaCategoria = salvaNuovaCategoria;
-        window.salvaNuovaSottocategoria = salvaNuovaSottocategoria;
-        window.salvaNuovoConto = salvaNuovoConto;
-        window.resetContiDefault = resetContiDefault;
-        window.modificaStruttura = modificaStruttura;
-        window.cercaFornitoreDaPiva = cercaFornitoreDaPiva;
-        window.resetFormPassiva = resetFormPassiva;
-        window.inserisciFatturaPassiva = inserisciFatturaPassiva;
-        window.resetFormAttiva = resetFormAttiva;
-        window.inserisciFatturaAttiva = inserisciFatturaAttiva;
-        window.handleXMLPassive = handleXMLPassive;
+        window.salvaCentroCosto = salvaCentroCosto;
+        window.eliminaCentro = eliminaCentro;
     </script>
 </body>
 </html>
