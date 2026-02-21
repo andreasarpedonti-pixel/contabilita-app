@@ -2,687 +2,455 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>Contabilità · Fatture Passive</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano dei Conti - Contabilità Italiana</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
-            background: #f8fafc;
-            padding: 24px;
-            color: #0f172a;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 1440px;
+            max-width: 1400px;
             margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
         }
 
-        .header {
-            background: white;
-            border-radius: 24px;
-            padding: 20px 28px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border: 1px solid #e9eef2;
-        }
-
-        .header h1 {
-            font-size: 1.6rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .header h1 i {
-            color: #3b82f6;
-            background: #eef2ff;
-            padding: 10px;
-            border-radius: 16px;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 28px;
-            flex-wrap: wrap;
-        }
-
-        .tab {
-            padding: 12px 22px;
-            background: white;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: 500;
-            border: 1px solid #e9eef2;
-            color: #475569;
-            transition: all 0.2s;
-        }
-
-        .tab:hover {
-            background: #f1f5f9;
-        }
-
-        .tab.active {
-            background: #3b82f6;
+        header {
+            background: linear-gradient(135deg, #4e54c8 0%, #8f94fb 100%);
             color: white;
-            border-color: #3b82f6;
+            padding: 30px;
+            text-align: center;
         }
 
-        .section {
-            background: white;
-            border-radius: 28px;
-            padding: 28px;
-            margin-bottom: 28px;
-            border: 1px solid #e9eef2;
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
         }
 
-        .section h2 {
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.4rem;
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
         }
 
-        .section h2 i {
-            color: #3b82f6;
-            background: #eef2ff;
-            padding: 8px;
-            border-radius: 16px;
-        }
-
-        /* Intestazione fattura */
-        .card-header {
-            background: #f8fafc;
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 24px;
-            border: 2px solid #e9eef2;
-        }
-
-        .card-header h3 {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 16px;
-            color: #0f172a;
-            font-size: 1.1rem;
-        }
-
-        .card-header h3 i {
-            color: #3b82f6;
-        }
-
-        .form-grid {
+        .piano-dei-conti {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 30px;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .form-group label {
-            font-weight: 500;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            color: #64748b;
-        }
-
-        .form-control {
-            padding: 12px 16px;
-            border: 2px solid #e9eef2;
-            border-radius: 18px;
-            font-size: 0.95rem;
-            transition: all 0.2s;
+        .sezione {
             background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #e0e0e0;
         }
 
-        .form-control:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 4px #eef2ff;
+        .sezione:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
 
-        select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-        }
-
-        /* Corpo fattura */
-        .card-body {
-            background: #f8fafc;
-            border-radius: 20px;
+        .sezione-header {
             padding: 20px;
-            margin-bottom: 24px;
-            border: 2px solid #e9eef2;
-        }
-
-        .card-body h3 {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-            border-radius: 16px;
-            border: 2px solid #e9eef2;
-            background: white;
-            margin-bottom: 16px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            text-align: left;
-            padding: 16px;
-            background: #f8fafc;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: #64748b;
-            border-bottom: 2px solid #e9eef2;
-        }
-
-        td {
-            padding: 12px 16px;
-            border-bottom: 1px solid #e9eef2;
-        }
-
-        .btn {
-            padding: 12px 28px;
-            border: none;
-            border-radius: 40px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: white;
-            border: 2px solid #e9eef2;
-            transition: all 0.2s;
-        }
-
-        .btn:hover {
-            background: #f8fafc;
-            transform: translateY(-1px);
-        }
-
-        .btn-primary {
-            background: #3b82f6;
             color: white;
-            border-color: #3b82f6;
+            font-weight: bold;
+            font-size: 1.3em;
+            text-align: center;
+            border-bottom: 3px solid rgba(255,255,255,0.3);
         }
 
-        .btn-primary:hover {
-            background: #2563eb;
+        .attivo .sezione-header { background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%); }
+        .passivo .sezione-header { background: linear-gradient(135deg, #e53935 0%, #b71c1c 100%); }
+        .costi .sezione-header { background: linear-gradient(135deg, #fb8c00 0%, #ef6c00 100%); }
+        .ricavi .sezione-header { background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%); }
+        .patrimonio .sezione-header { background: linear-gradient(135deg, #8e24aa 0%, #6a1b9a 100%); }
+
+        .livello2 {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            background-color: #f8f9fa;
         }
 
-        .btn-success {
-            background: #10b981;
-            color: white;
-            border-color: #10b981;
+        .livello2 h3 {
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            padding-left: 10px;
+            border-left: 4px solid;
         }
 
-        .btn-success:hover {
-            background: #059669;
+        .attivo .livello2 h3 { border-left-color: #43a047; }
+        .passivo .livello2 h3 { border-left-color: #e53935; }
+        .costi .livello2 h3 { border-left-color: #fb8c00; }
+        .ricavi .livello2 h3 { border-left-color: #1e88e5; }
+        .patrimonio .livello2 h3 { border-left-color: #8e24aa; }
+
+        .livello3 {
+            list-style: none;
+            margin-left: 15px;
         }
 
-        .btn-secondary {
-            background: #f1f5f9;
-            color: #475569;
-            border-color: #e9eef2;
-        }
-
-        .btn-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 14px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            border: 2px solid #e9eef2;
+        .livello3 li {
+            padding: 8px 15px;
+            margin: 5px 0;
+            background-color: white;
+            border-radius: 6px;
+            font-size: 0.95em;
+            color: #555;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: background-color 0.3s;
             cursor: pointer;
+            border-left: 2px solid transparent;
         }
 
-        .btn-icon:hover {
-            background: #f1f5f9;
+        .livello3 li:hover {
+            background-color: #f0f0f0;
+            border-left-color: #667eea;
         }
 
-        .flex {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
+        .codice-conto {
+            font-family: 'Courier New', monospace;
+            color: #666;
+            font-size: 0.9em;
+            margin-right: 10px;
+            font-weight: bold;
         }
 
-        .badge-info {
-            background: #eef2ff;
-            color: #3b82f6;
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            border: 1px solid #cddfff;
+        footer {
+            background-color: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
         }
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 32px;
-            padding: 32px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
+        @media (max-width: 768px) {
+            .piano-dei-conti {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 1.8em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1><i class="fas fa-calculator"></i> Contabilità Fatture Passive</h1>
-            <span class="badge-info"><i class="fas fa-circle"></i> Online</span>
-        </div>
+        <header>
+            <h1>📊 Piano dei Conti Italiani</h1>
+            <p>Struttura a tre livelli secondo la classificazione civilistica</p>
+        </header>
 
-        <div class="tabs">
-            <div class="tab active" onclick="cambiaTab('passive')">Fatture Passive</div>
-            <div class="tab" onclick="cambiaTab('conti')">Piano dei Conti</div>
-        </div>
-
-        <!-- FATTURE PASSIVE -->
-        <div id="passive-view" class="section">
-            <h2><i class="fas fa-file-invoice"></i> Inserimento Fattura Passiva</h2>
-
-            <!-- INTESTAZIONE FATTURA -->
-            <div class="card-header">
-                <h3><i class="fas fa-info-circle"></i> Dati Testata</h3>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Numero fattura *</label>
-                        <input type="text" id="fatturaNumero" class="form-control" placeholder="FT-2024-001" value="FT-001">
-                    </div>
-                    <div class="form-group">
-                        <label>Data *</label>
-                        <input type="date" id="fatturaData" class="form-control" value="2026-02-21">
-                    </div>
-                    <div class="form-group">
-                        <label>Fornitore *</label>
-                        <input type="text" id="fatturaFornitore" class="form-control" placeholder="Ragione sociale" value="Fornitore Rossi">
-                    </div>
-                    <div class="form-group">
-                        <label>Partita IVA *</label>
-                        <input type="text" id="fatturaPiva" class="form-control" placeholder="01234567890" value="12345678901" onchange="cercaFornitore()">
-                    </div>
+        <div class="piano-dei-conti">
+            <!-- SEZIONE ATTIVO -->
+            <div class="sezione attivo">
+                <div class="sezione-header">
+                    <span>💰 ATTIVO</span>
+                    <div style="font-size: 0.7em; margin-top: 5px;">Classe A</div>
                 </div>
-                <div id="fornitoreInfo" class="badge-info" style="margin-top: 16px; display: none;"></div>
-            </div>
-
-            <!-- CORPO FATTURA -->
-            <div class="card-body">
-                <h3><i class="fas fa-list"></i> Dettaglio Linee</h3>
                 
-                <div class="table-responsive">
-                    <table id="lineeTable">
-                        <thead>
-                            <tr>
-                                <th>Descrizione</th>
-                                <th>Quantità</th>
-                                <th>Prezzo unitario</th>
-                                <th>% IVA</th>
-                                <th>Centro di costo</th>
-                                <th>Importo</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="lineeBody">
-                            <!-- Righe aggiunte dinamicamente -->
-                        </tbody>
-                    </table>
+                <div class="livello2">
+                    <h3>📁 Immobilizzazioni Immateriali</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">A.I.1</span> Costi di impianto e ampliamento</li>
+                        <li><span class="codice-conto">A.I.2</span> Costi di sviluppo</li>
+                        <li><span class="codice-conto">A.I.3</span> Diritti di brevetto industriale</li>
+                        <li><span class="codice-conto">A.I.4</span> Concessioni, licenze, marchi</li>
+                        <li><span class="codice-conto">A.I.5</span> Avviamento</li>
+                        <li><span class="codice-conto">A.I.6</span> Immobilizzazioni in corso e acconti</li>
+                    </ul>
                 </div>
 
-                <div class="flex" style="justify-content: space-between; align-items: center;">
-                    <button class="btn btn-secondary" onclick="aggiungiRiga()">
-                        <i class="fas fa-plus"></i> Aggiungi riga
-                    </button>
-                    <div style="font-size: 1.2rem; font-weight: 600;">
-                        Totale: <span id="totaleFattura">€ 0,00</span>
-                    </div>
+                <div class="livello2">
+                    <h3>📦 Immobilizzazioni Materiali</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">A.II.1</span> Terreni e fabbricati</li>
+                        <li><span class="codice-conto">A.II.2</span> Impianti e macchinario</li>
+                        <li><span class="codice-conto">A.II.3</span> Attrezzature industriali e commerciali</li>
+                        <li><span class="codice-conto">A.II.4</span> Altri beni materiali</li>
+                        <li><span class="codice-conto">A.II.5</span> Immobilizzazioni in corso e acconti</li>
+                    </ul>
+                </div>
+
+                <div class="livello2">
+                    <h3>💼 Attivo Circolante</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">C.I.1</span> Rimanenze materie prime</li>
+                        <li><span class="codice-conto">C.I.2</span> Rimanenze prodotti in corso</li>
+                        <li><span class="codice-conto">C.I.3</span> Rimanenze prodotti finiti</li>
+                        <li><span class="codice-conto">C.I.4</span> Acconti a fornitori</li>
+                        <li><span class="codice-conto">C.II.1</span> Crediti verso clienti</li>
+                        <li><span class="codice-conto">C.III.1</span> Attività finanziarie</li>
+                        <li><span class="codice-conto">C.IV.1</span> Disponibilità liquide</li>
+                    </ul>
+                </div>
+
+                <div class="livello2">
+                    <h3>📋 Crediti Diversi</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">B.II.2</span> Crediti verso controllate</li>
+                        <li><span class="codice-conto">B.II.3</span> Crediti verso collegate</li>
+                        <li><span class="codice-conto">B.II.4</span> Crediti verso controllanti</li>
+                        <li><span class="codice-conto">B.II.5</span> Crediti tributari</li>
+                        <li><span class="codice-conto">B.II.6</span> Crediti per imposte anticipate</li>
+                        <li><span class="codice-conto">B.II.7</span> Verso altri</li>
+                    </ul>
                 </div>
             </div>
 
-            <!-- PULSANTI FINALI -->
-            <div class="flex" style="justify-content: flex-end;">
-                <button class="btn btn-success" onclick="salvaFattura()">
-                    <i class="fas fa-save"></i> Salva fattura
-                </button>
-                <button class="btn btn-secondary" onclick="resettaFattura()">
-                    <i class="fas fa-undo"></i> Reset
-                </button>
+            <!-- SEZIONE PASSIVO -->
+            <div class="sezione passivo">
+                <div class="sezione-header">
+                    <span>💳 PASSIVO</span>
+                    <div style="font-size: 0.7em; margin-top: 5px;">Classe D/E</div>
+                </div>
+                
+                <div class="livello2">
+                    <h3>🏦 Debiti Finanziari</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">D.1</span> Obbligazioni</li>
+                        <li><span class="codice-conto">D.2</span> Debiti verso banche a breve</li>
+                        <li><span class="codice-conto">D.3</span> Debiti verso banche a medio/lungo</li>
+                        <li><span class="codice-conto">D.4</span> Debiti verso altri finanziatori</li>
+                        <li><span class="codice-conto">D.5</span> Debiti per leasing</li>
+                    </ul>
+                </div>
+
+                <div class="livello2">
+                    <h3>📝 Debiti Commerciali</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">D.6</span> Debiti verso fornitori</li>
+                        <li><span class="codice-conto">D.7</span> Debiti rappresentati da titoli di credito</li>
+                        <li><span class="codice-conto">D.8</span> Acconti da clienti</li>
+                        <li><span class="codice-conto">D.9</span> Debiti per fatture da ricevere</li>
+                    </ul>
+                </div>
+
+                <div class="livello2">
+                    <h3>🏛️ Debiti Tributari e Previdenziali</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">D.10</span> Debiti per IVA</li>
+                        <li><span class="codice-conto">D.11</span> Debiti per IRES</li>
+                        <li><span class="codice-conto">D.12</span> Debiti per IRAP</li>
+                        <li><span class="codice-conto">D.13</span> Debiti verso INPS</li>
+                        <li><span class="codice-conto">D.14</span> Debiti verso altri enti previdenziali</li>
+                        <li><span class="codice-conto">D.15</span> Ritenute da versare</li>
+                    </ul>
+                </div>
+
+                <div class="livello2">
+                    <h3>👥 Altri Debiti</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">D.16</span> Debiti verso dipendenti (TFR)</li>
+                        <li><span class="codice-conto">D.17</span> Debiti verso amministratori</li>
+                        <li><span class="codice-conto">D.18</span> Debiti verso soci per finanziamenti</li>
+                        <li><span class="codice-conto">D.19</span> Debiti verso controllate/collegate</li>
+                    </ul>
+                </div>
             </div>
 
-            <!-- MESSAGGIO CONFERMA -->
-            <div id="messaggioConferma" style="display: none; margin-top: 20px; padding: 16px; background: #e6f7e6; border-radius: 16px; color: #10b981; font-weight: 500;"></div>
+            <!-- SEZIONE COSTI -->
+            <div class="sezione costi">
+                <div class="sezione-header">
+                    <span>📉 COSTI</span>
+                    <div style="font-size: 0.7em; margin-top: 5px;">Classe B/C</div>
+                </div>
+                
+                <div class="livello2">
+                    <h3>🛒 Costi per Materie Prime</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">B.6.1</span> Acquisto materie prime</li>
+                        <li><span class="codice-conto">B.6.2</span> Acquisto materie sussidiarie</li>
+                        <li><span class="codice-conto">B.6.3</span> Acquisto materiali di consumo</li>
+                        <li><span class="codice-conto">B.6.4</span> Variazione rimanenze materie</li>
+                    </ul>
+                </div>
+
+                <div class="livello2">
+                    <h3>📦 Costi per Servizi</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">B.7.1</span> Costi per consulenze</li>
+                        <li><span class="codice-conto">B.7.2</span> Utenze (luce, gas, acqua)</li>
+                        <li><span class="codice-conto">B.7.3</span> Spese telefoniche e internet</li>
+                        <li><span class="codice-conto">B.7.4</span> Spese di manutenzione</li>
+                        <li><span class="codice-conto">B.7.5</span> Assicurazioni</li>
+                        <li><span class="codice-conto">B.7.6</span> Pubblicità e marketing</li>
+                    </ul>
+                </div>
+
+                <div class="livello2">
+                    <h3>👥 Costi del Personale</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">B.9.1</span> Salari e stipendi</li>
+                        <li><span class="codice-conto">B.9.2</span> Oneri sociali</li>
+                        <li><span class="codice-conto">B.9.3</span> Trattamento di fine rapporto</li>
+                        <li><span class="codice-conto">B.9.4</span> Altri costi del personale</li>
+                    </ul>
+                </div>
+
+                <div class="livello2">
+                    <h3>🏢 Costi Generali</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">B.8.1</span> Affitti passivi e noleggi</li>
+                        <li><span class="codice-conto">B.8.2</span> Spese di pulizia</li>
+                        <li><span class="codice-conto">B.8.3</span> Cancelleria e stampati</li>
+                        <li><span class="codice-conto">B.8.4</span> Spese di rappresentanza</li>
+                        <li><span class="codice-conto">B.8.5</span> Quote associative</li>
+                    </ul>
+                </div>
+
+                <div class="livello2">
+                    <h3>📊 Ammortamenti e Accantonamenti</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">B.10.1</span> Ammortamento immobilizzazioni immateriali</li>
+                        <li><span class="codice-conto">B.10.2</span> Ammortamento immobilizzazioni materiali</li>
+                        <li><span class="codice-conto">B.10.3</span> Altre svalutazioni</li>
+                        <li><span class="codice-conto">B.12.1</span> Accantonamento rischi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SEZIONE RICAVI -->
+            <div class="sezione ricavi">
+                <div class="sezione-header">
+                    <span>📈 RICAVI</span>
+                    <div style="font-size: 0.7em; margin-top: 5px;">Classe A</div>
+                </div>
+                
+                <div class="livello2">
+                    <h3>🏭 Ricavi delle Vendite</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">A.1.1</span> Vendita prodotti finiti</li>
+                        <li><span class="codice-conto">A.1.2</span> Vendita merci</li>
+                        <li><span class="codice-conto">A.1.3</span> Prestazioni di servizi</li>
+                        <li><span class="codice-conto">A.1.4</span> Ricavi da lavorazioni conto terzi</li>
+                    </ul>
+                </div>
+
+                <div class="livello2">
+                    <h3>📋 Ricavi Accessori</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">A.5.1</span> Affitti attivi</li>
+                        <li><span class="codice-conto">A.5.2</span> Royalties attive</li>
+                        <li><span class="codice-conto">A.5.3</span> Plusvalenze da alienazioni</li>
+                        <li><span class="codice-conto">A.5.4</span> Ricavi da formazione</li>
+                    </ul>
+                </div>
+
+                <div class="livello2">
+                    <h3>💰 Proventi Finanziari</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">C.16.1</span> Interessi attivi bancari</li>
+                        <li><span class="codice-conto">C.16.2</span> Interessi su crediti commerciali</li>
+                        <li><span class="codice-conto">C.16.3</span> Dividendi</li>
+                        <li><span class="codice-conto">C.16.4</span> Proventi da partecipazioni</li>
+                    </ul>
+                </div>
+
+                <div class="livello2">
+                    <h3>🎯 Altri Ricavi</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">A.5.5</span> Sopravvenienze attive</li>
+                        <li><span class="codice-conto">A.5.6</span> Contributi in conto esercizio</li>
+                        <li><span class="codice-conto">A.5.7</span> Rimborsi assicurativi</li>
+                        <li><span class="codice-conto">A.5.8</span> Arrotondamenti attivi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SEZIONE PATRIMONIO NETTO -->
+            <div class="sezione patrimonio">
+                <div class="sezione-header">
+                    <span>🏛️ PATRIMONIO NETTO</span>
+                    <div style="font-size: 0.7em; margin-top: 5px;">Classe A</div>
+                </div>
+                
+                <div class="livello2">
+                    <h3>💰 Capitale Sociale</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">A.I.1</span> Capitale sociale sottoscritto</li>
+                        <li><span class="codice-conto">A.I.2</span> Capitale sociale versato</li>
+                        <li><span class="codice-conto">A.I.3</span> Capitale sociale da richiamare</li>
+                    </ul>
+                </div>
+
+                <div class="livello2">
+                    <h3>💎 Riserve</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">A.II.1</span> Riserva legale</li>
+                        <li><span class="codice-conto">A.II.2</span> Riserva straordinaria</li>
+                        <li><span class="codice-conto">A.II.3</span> Riserva da sovrapprezzo azioni</li>
+                        <li><span class="codice-conto">A.II.4</span> Riserva di rivalutazione</li>
+                        <li><span class="codice-conto">A.II.5</span> Riserva per utili su cambi</li>
+                        <li><span class="codice-conto">A.II.6</span> Riserva per azioni proprie</li>
+                    </ul>
+                </div>
+
+                <div class="livello2">
+                    <h3>📊 Utili/Perdite</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">A.III.1</span> Utili (perdite) portati a nuovo</li>
+                        <li><span class="codice-conto">A.IV.1</span> Utile (perdita) dell'esercizio</li>
+                        <li><span class="codice-conto">A.IV.2</span> Acconto dividendi</li>
+                    </ul>
+                </div>
+
+                <div class="livello2">
+                    <h3>🔒 Riserve Statutarie</h3>
+                    <ul class="livello3">
+                        <li><span class="codice-conto">A.V.1</span> Riserva per rinnovamento impianti</li>
+                        <li><span class="codice-conto">A.V.2</span> Riserva per ampliamento attività</li>
+                        <li><span class="codice-conto">A.V.3</span> Riserva straordinaria statutaria</li>
+                        <li><span class="codice-conto">A.V.4</span> Riserva per acquisto partecipazioni</li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-        <!-- PIANO DEI CONTI (semplificato) -->
-        <div id="conti-view" class="section" style="display: none;">
-            <h2><i class="fas fa-sitemap"></i> Centri di costo</h2>
-            <div id="listaCentriCosto" style="padding: 20px; background: #f8fafc; border-radius: 16px;"></div>
-        </div>
-    </div>
-
-    <!-- MODALE NUOVO CENTRO DI COSTO -->
-    <div id="modalCentroCosto" class="modal">
-        <div class="modal-content">
-            <h3>Nuovo centro di costo</h3>
-            <div class="form-group">
-                <label>Codice</label>
-                <input type="text" id="nuovoCentroCodice" class="form-control" placeholder="CDC-001">
-            </div>
-            <div class="form-group">
-                <label>Descrizione</label>
-                <input type="text" id="nuovoCentroDescrizione" class="form-control" placeholder="Produzione">
-            </div>
-            <div class="flex">
-                <button class="btn btn-success" onclick="salvaCentroCosto()">Salva</button>
-                <button class="btn btn-secondary" onclick="chiudiModal()">Annulla</button>
-            </div>
-        </div>
+        <footer>
+            <p>📋 Piano dei conti civilistico italiano - Struttura a tre livelli</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">© 2024 - Sistema di contabilità conforme ai principi contabili italiani</p>
+        </footer>
     </div>
 
     <script>
-        // ============================================
-        // DATI DI ESEMPIO
-        // ============================================
-        let lineeFattura = [];
-        let centriCosto = [
-            { id: 'c1', codice: 'CDC-001', descrizione: 'Produzione' },
-            { id: 'c2', codice: 'CDC-002', descrizione: 'Amministrazione' },
-            { id: 'c3', codice: 'CDC-003', descrizione: 'Vendite' }
-        ];
-        let contiFornitori = [
-            { id: 'f1', nome: 'Fornitore Rossi', piva: '12345678901' },
-            { id: 'f2', nome: 'Fornitore Bianchi', piva: '98765432109' }
-        ];
-
-        // ============================================
-        // INIZIALIZZAZIONE
-        // ============================================
-        document.addEventListener('DOMContentLoaded', function() {
-            // Aggiungi una riga vuota all'avvio
-            aggiungiRiga();
-            aggiornaListaCentriCosto();
+        // Aggiungiamo interattività per mostrare i dettagli dei conti
+        document.querySelectorAll('.livello3 li').forEach(item => {
+            item.addEventListener('click', function() {
+                const codice = this.querySelector('.codice-conto').textContent;
+                const descrizione = this.textContent.replace(codice, '').trim();
+                alert(`Conto selezionato:\n${codice} - ${descrizione}\n\nFunzionalità in sviluppo per la gestione completa del conto.`);
+            });
         });
 
-        // ============================================
-        // FUNZIONI TAB
-        // ============================================
-        function cambiaTab(tab) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-            document.querySelector(`.tab[onclick*="${tab}"]`).classList.add('active');
-            document.getElementById(tab + '-view').style.display = 'block';
-        }
-
-        // ============================================
-        // GESTIONE LINEE FATTURA
-        // ============================================
-        function aggiungiRiga() {
-            const nuovaRiga = {
-                id: Date.now() + Math.random(),
-                descrizione: '',
-                quantita: 1,
-                prezzo: 0,
-                iva: 22,
-                centroId: ''
-            };
-            lineeFattura.push(nuovaRiga);
-            aggiornaTabelleLinee();
-        }
-
-        function rimuoviRiga(id) {
-            lineeFattura = lineeFattura.filter(l => l.id !== id);
-            aggiornaTabelleLinee();
-        }
-
-        function aggiornaRiga(id, campo, valore) {
-            const riga = lineeFattura.find(l => l.id === id);
-            if (riga) {
-                riga[campo] = campo === 'quantita' || campo === 'prezzo' || campo === 'iva' ? parseFloat(valore) || 0 : valore;
-                aggiornaTabelleLinee();
+        // Effetto hover migliorato
+        const style = document.createElement('style');
+        style.textContent = `
+            .livello3 li {
+                transition: all 0.3s ease;
             }
-        }
-
-        function calcolaImporto(riga) {
-            return (riga.quantita || 0) * (riga.prezzo || 0);
-        }
-
-        function calcolaTotale() {
-            return lineeFattura.reduce((sum, riga) => sum + calcolaImporto(riga), 0);
-        }
-
-        function aggiornaTabelleLinee() {
-            const tbody = document.getElementById('lineeBody');
-            if (!tbody) return;
-
-            tbody.innerHTML = '';
-            
-            lineeFattura.forEach(riga => {
-                const tr = document.createElement('tr');
-                const importo = calcolaImporto(riga);
-                
-                tr.innerHTML = `
-                    <td><input type="text" class="form-control" value="${riga.descrizione}" placeholder="Descrizione" onchange="aggiornaRiga(${riga.id}, 'descrizione', this.value)"></td>
-                    <td><input type="number" class="form-control" value="${riga.quantita}" min="0" step="0.01" onchange="aggiornaRiga(${riga.id}, 'quantita', this.value)"></td>
-                    <td><input type="number" class="form-control" value="${riga.prezzo}" min="0" step="0.01" onchange="aggiornaRiga(${riga.id}, 'prezzo', this.value)"></td>
-                    <td>
-                        <select class="form-control" onchange="aggiornaRiga(${riga.id}, 'iva', this.value)">
-                            <option value="22" ${riga.iva === 22 ? 'selected' : ''}>22%</option>
-                            <option value="10" ${riga.iva === 10 ? 'selected' : ''}>10%</option>
-                            <option value="5" ${riga.iva === 5 ? 'selected' : ''}>5%</option>
-                            <option value="4" ${riga.iva === 4 ? 'selected' : ''}>4%</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-control" onchange="aggiornaRiga(${riga.id}, 'centroId', this.value)">
-                            <option value="">Seleziona centro</option>
-                            ${centriCosto.map(c => `<option value="${c.id}" ${riga.centroId === c.id ? 'selected' : ''}>${c.codice} - ${c.descrizione}</option>`).join('')}
-                        </select>
-                    </td>
-                    <td>€ ${importo.toFixed(2)}</td>
-                    <td><button class="btn-icon" onclick="rimuoviRiga(${riga.id})"><i class="fas fa-trash"></i></button></td>
-                `;
-                
-                tbody.appendChild(tr);
-            });
-
-            document.getElementById('totaleFattura').textContent = `€ ${calcolaTotale().toFixed(2)}`;
-        }
-
-        // ============================================
-        // RICERCA FORNITORE
-        // ============================================
-        function cercaFornitore() {
-            const piva = document.getElementById('fatturaPiva').value;
-            const fornitore = contiFornitori.find(f => f.piva === piva);
-            const infoDiv = document.getElementById('fornitoreInfo');
-            
-            if (fornitore) {
-                infoDiv.style.display = 'block';
-                infoDiv.innerHTML = `✓ Fornitore trovato: ${fornitore.nome}`;
-                document.getElementById('fatturaFornitore').value = fornitore.nome;
-            } else {
-                infoDiv.style.display = 'none';
+            .livello3 li:active {
+                transform: scale(0.98);
+                background-color: #e3f2fd;
             }
-        }
-
-        // ============================================
-        // SALVATAGGIO FATTURA
-        // ============================================
-        function salvaFattura() {
-            // Validazione
-            if (!document.getElementById('fatturaNumero').value) {
-                alert('Inserire il numero fattura');
-                return;
-            }
-            
-            if (lineeFattura.length === 0) {
-                alert('Aggiungere almeno una riga');
-                return;
-            }
-
-            // Costruisci oggetto fattura
-            const fattura = {
-                numero: document.getElementById('fatturaNumero').value,
-                data: document.getElementById('fatturaData').value,
-                fornitore: document.getElementById('fatturaFornitore').value,
-                piva: document.getElementById('fatturaPiva').value,
-                linee: lineeFattura.map(l => ({
-                    ...l,
-                    importo: calcolaImporto(l)
-                })),
-                totale: calcolaTotale()
-            };
-
-            // Mostra conferma
-            const msgDiv = document.getElementById('messaggioConferma');
-            msgDiv.style.display = 'block';
-            msgDiv.innerHTML = `✅ Fattura ${fattura.numero} salvata con successo! Totale: € ${fattura.totale.toFixed(2)}`;
-            
-            console.log('Fattura salvata:', fattura);
-            
-            // Reset dopo 3 secondi
-            setTimeout(() => {
-                msgDiv.style.display = 'none';
-            }, 3000);
-        }
-
-        function resettaFattura() {
-            if (confirm('Resettare tutti i dati?')) {
-                document.getElementById('fatturaNumero').value = 'FT-001';
-                document.getElementById('fatturaData').value = new Date().toISOString().split('T')[0];
-                document.getElementById('fatturaFornitore').value = 'Fornitore Rossi';
-                document.getElementById('fatturaPiva').value = '12345678901';
-                document.getElementById('fornitoreInfo').style.display = 'none';
-                
-                lineeFattura = [];
-                aggiungiRiga();
-            }
-        }
-
-        // ============================================
-        // CENTRI DI COSTO
-        // ============================================
-        function aggiornaListaCentriCosto() {
-            const container = document.getElementById('listaCentriCosto');
-            if (!container) return;
-            
-            let html = '<div class="flex" style="margin-bottom: 16px;"><button class="btn btn-primary" onclick="mostraModal()"><i class="fas fa-plus"></i> Nuovo centro</button></div>';
-            
-            if (centriCosto.length === 0) {
-                html += '<p class="empty-state">Nessun centro di costo</p>';
-            } else {
-                html += '<table><tr><th>Codice</th><th>Descrizione</th><th></th></tr>';
-                centriCosto.forEach(c => {
-                    html += `<tr><td>${c.codice}</td><td>${c.descrizione}</td><td><button class="btn-icon" onclick="eliminaCentro('${c.id}')"><i class="fas fa-trash"></i></button></td></tr>`;
-                });
-                html += '</table>';
-            }
-            
-            container.innerHTML = html;
-        }
-
-        function mostraModal() {
-            document.getElementById('modalCentroCosto').classList.add('active');
-        }
-
-        function chiudiModal() {
-            document.getElementById('modalCentroCosto').classList.remove('active');
-            document.getElementById('nuovoCentroCodice').value = '';
-            document.getElementById('nuovoCentroDescrizione').value = '';
-        }
-
-        function salvaCentroCosto() {
-            const codice = document.getElementById('nuovoCentroCodice').value;
-            const descrizione = document.getElementById('nuovoCentroDescrizione').value;
-            
-            if (!codice || !descrizione) {
-                alert('Compila tutti i campi');
-                return;
-            }
-            
-            centriCosto.push({
-                id: 'c' + Date.now(),
-                codice,
-                descrizione
-            });
-            
-            chiudiModal();
-            aggiornaListaCentriCosto();
-            aggiornaTabelleLinee(); // Aggiorna dropdown nelle righe
-        }
-
-        function eliminaCentro(id) {
-            if (confirm('Eliminare questo centro di costo?')) {
-                centriCosto = centriCosto.filter(c => c.id !== id);
-                aggiornaListaCentriCosto();
-                aggiornaTabelleLinee();
-            }
-        }
-
-        // ============================================
-        // ESPONI FUNZIONI GLOBALI
-        // ============================================
-        window.cambiaTab = cambiaTab;
-        window.aggiungiRiga = aggiungiRiga;
-        window.rimuoviRiga = rimuoviRiga;
-        window.aggiornaRiga = aggiornaRiga;
-        window.salvaFattura = salvaFattura;
-        window.resettaFattura = resettaFattura;
-        window.cercaFornitore = cercaFornitore;
-        window.mostraModal = mostraModal;
-        window.chiudiModal = chiudiModal;
-        window.salvaCentroCosto = salvaCentroCosto;
-        window.eliminaCentro = eliminaCentro;
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
