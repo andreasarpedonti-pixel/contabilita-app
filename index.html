@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piano dei Conti - Visualizzazione Completa</title>
+    <title>Piano dei Conti - Visualizzazione Completa con Patrimonio Netto</title>
     <style>
         * {
             margin: 0;
@@ -391,7 +391,7 @@
     <div class="container">
         <header>
             <h1>📊 GESTIONE CONTABILITÀ ITALIANA</h1>
-            <p>Piano dei conti dinamico - Visualizzazione completa e scrollabile</p>
+            <p>Piano dei conti dinamico - 5 Sezioni: Attivo, Passivo, Costi, Ricavi, Patrimonio Netto</p>
         </header>
 
         <!-- TABS NAVIGATION -->
@@ -456,12 +456,12 @@
         </div>
 
         <footer>
-            <p>📋 Sistema di contabilità civilistica italiana - Visualizzazione dinamica completa</p>
+            <p>📋 Sistema di contabilità civilistica italiana - 5 Sezioni complete con Patrimonio Netto</p>
         </footer>
     </div>
 
     <script>
-        // Struttura dati del piano dei conti
+        // Struttura dati del piano dei conti - COMPLETA CON PATRIMONIO NETTO
         let pianoDeiConti = {
             attivo: {
                 nome: 'ATTIVO',
@@ -476,7 +476,8 @@
                             { codice: 'A.I.2', descrizione: 'Costi di sviluppo' },
                             { codice: 'A.I.3', descrizione: 'Diritti di brevetto industriale' },
                             { codice: 'A.I.4', descrizione: 'Concessioni, licenze, marchi' },
-                            { codice: 'A.I.5', descrizione: 'Avviamento' }
+                            { codice: 'A.I.5', descrizione: 'Avviamento' },
+                            { codice: 'A.I.6', descrizione: 'Immobilizzazioni in corso e acconti' }
                         ]
                     },
                     'immobilizzazioni-materiali': {
@@ -485,7 +486,9 @@
                         conti: [
                             { codice: 'A.II.1', descrizione: 'Terreni e fabbricati' },
                             { codice: 'A.II.2', descrizione: 'Impianti e macchinario' },
-                            { codice: 'A.II.3', descrizione: 'Attrezzature industriali e commerciali' }
+                            { codice: 'A.II.3', descrizione: 'Attrezzature industriali e commerciali' },
+                            { codice: 'A.II.4', descrizione: 'Altri beni materiali' },
+                            { codice: 'A.II.5', descrizione: 'Immobilizzazioni in corso e acconti' }
                         ]
                     },
                     'attivo-circolante': {
@@ -495,8 +498,10 @@
                             { codice: 'A.III.1', descrizione: 'Rimanenze materie prime' },
                             { codice: 'A.III.2', descrizione: 'Rimanenze prodotti in corso' },
                             { codice: 'A.III.3', descrizione: 'Rimanenze prodotti finiti' },
-                            { codice: 'A.III.4', descrizione: 'Crediti verso clienti' },
-                            { codice: 'A.III.5', descrizione: 'Disponibilità liquide' }
+                            { codice: 'A.III.4', descrizione: 'Acconti a fornitori' },
+                            { codice: 'A.III.5', descrizione: 'Crediti verso clienti' },
+                            { codice: 'A.III.6', descrizione: 'Attività finanziarie' },
+                            { codice: 'A.III.7', descrizione: 'Disponibilità liquide' }
                         ]
                     },
                     'crediti-diversi': {
@@ -504,8 +509,11 @@
                         prefisso: 'A.IV',
                         conti: [
                             { codice: 'A.IV.1', descrizione: 'Crediti verso controllate' },
-                            { codice: 'A.IV.2', descrizione: 'Crediti tributari' },
-                            { codice: 'A.IV.3', descrizione: 'Crediti per imposte anticipate' }
+                            { codice: 'A.IV.2', descrizione: 'Crediti verso collegate' },
+                            { codice: 'A.IV.3', descrizione: 'Crediti verso controllanti' },
+                            { codice: 'A.IV.4', descrizione: 'Crediti tributari' },
+                            { codice: 'A.IV.5', descrizione: 'Crediti per imposte anticipate' },
+                            { codice: 'A.IV.6', descrizione: 'Verso altri' }
                         ]
                     }
                 }
@@ -521,7 +529,9 @@
                         conti: [
                             { codice: 'P.I.1', descrizione: 'Obbligazioni' },
                             { codice: 'P.I.2', descrizione: 'Debiti verso banche a breve' },
-                            { codice: 'P.I.3', descrizione: 'Debiti verso banche a medio/lungo' }
+                            { codice: 'P.I.3', descrizione: 'Debiti verso banche a medio/lungo' },
+                            { codice: 'P.I.4', descrizione: 'Debiti verso altri finanziatori' },
+                            { codice: 'P.I.5', descrizione: 'Debiti per leasing' }
                         ]
                     },
                     'debiti-commerciali': {
@@ -529,8 +539,9 @@
                         prefisso: 'P.II',
                         conti: [
                             { codice: 'P.II.1', descrizione: 'Debiti verso fornitori' },
-                            { codice: 'P.II.2', descrizione: 'Acconti da clienti' },
-                            { codice: 'P.II.3', descrizione: 'Debiti per fatture da ricevere' }
+                            { codice: 'P.II.2', descrizione: 'Debiti rappresentati da titoli di credito' },
+                            { codice: 'P.II.3', descrizione: 'Acconti da clienti' },
+                            { codice: 'P.II.4', descrizione: 'Debiti per fatture da ricevere' }
                         ]
                     },
                     'debiti-tributari': {
@@ -540,7 +551,19 @@
                             { codice: 'P.III.1', descrizione: 'Debiti per IVA' },
                             { codice: 'P.III.2', descrizione: 'Debiti per IRES' },
                             { codice: 'P.III.3', descrizione: 'Debiti per IRAP' },
-                            { codice: 'P.III.4', descrizione: 'Debiti verso INPS' }
+                            { codice: 'P.III.4', descrizione: 'Debiti verso INPS' },
+                            { codice: 'P.III.5', descrizione: 'Debiti verso altri enti previdenziali' },
+                            { codice: 'P.III.6', descrizione: 'Ritenute da versare' }
+                        ]
+                    },
+                    'altri-debiti': {
+                        nome: 'Altri Debiti',
+                        prefisso: 'P.IV',
+                        conti: [
+                            { codice: 'P.IV.1', descrizione: 'Debiti verso dipendenti (TFR)' },
+                            { codice: 'P.IV.2', descrizione: 'Debiti verso amministratori' },
+                            { codice: 'P.IV.3', descrizione: 'Debiti verso soci per finanziamenti' },
+                            { codice: 'P.IV.4', descrizione: 'Debiti verso controllate/collegate' }
                         ]
                     }
                 }
@@ -556,7 +579,8 @@
                         conti: [
                             { codice: 'C.I.1', descrizione: 'Acquisto materie prime' },
                             { codice: 'C.I.2', descrizione: 'Acquisto materie sussidiarie' },
-                            { codice: 'C.I.3', descrizione: 'Acquisto materiali di consumo' }
+                            { codice: 'C.I.3', descrizione: 'Acquisto materiali di consumo' },
+                            { codice: 'C.I.4', descrizione: 'Variazione rimanenze materie' }
                         ]
                     },
                     'costi-servizi': {
@@ -564,9 +588,11 @@
                         prefisso: 'C.II',
                         conti: [
                             { codice: 'C.II.1', descrizione: 'Costi per consulenze' },
-                            { codice: 'C.II.2', descrizione: 'Utenze' },
-                            { codice: 'C.II.3', descrizione: 'Spese di manutenzione' },
-                            { codice: 'C.II.4', descrizione: 'Assicurazioni' }
+                            { codice: 'C.II.2', descrizione: 'Utenze (luce, gas, acqua)' },
+                            { codice: 'C.II.3', descrizione: 'Spese telefoniche e internet' },
+                            { codice: 'C.II.4', descrizione: 'Spese di manutenzione' },
+                            { codice: 'C.II.5', descrizione: 'Assicurazioni' },
+                            { codice: 'C.II.6', descrizione: 'Pubblicità e marketing' }
                         ]
                     },
                     'costi-personale': {
@@ -575,7 +601,29 @@
                         conti: [
                             { codice: 'C.III.1', descrizione: 'Salari e stipendi' },
                             { codice: 'C.III.2', descrizione: 'Oneri sociali' },
-                            { codice: 'C.III.3', descrizione: 'Trattamento di fine rapporto' }
+                            { codice: 'C.III.3', descrizione: 'Trattamento di fine rapporto' },
+                            { codice: 'C.III.4', descrizione: 'Altri costi del personale' }
+                        ]
+                    },
+                    'costi-generali': {
+                        nome: 'Costi Generali',
+                        prefisso: 'C.IV',
+                        conti: [
+                            { codice: 'C.IV.1', descrizione: 'Affitti passivi e noleggi' },
+                            { codice: 'C.IV.2', descrizione: 'Spese di pulizia' },
+                            { codice: 'C.IV.3', descrizione: 'Cancelleria e stampati' },
+                            { codice: 'C.IV.4', descrizione: 'Spese di rappresentanza' },
+                            { codice: 'C.IV.5', descrizione: 'Quote associative' }
+                        ]
+                    },
+                    'ammortamenti': {
+                        nome: 'Ammortamenti e Accantonamenti',
+                        prefisso: 'C.V',
+                        conti: [
+                            { codice: 'C.V.1', descrizione: 'Ammortamento immobilizzazioni immateriali' },
+                            { codice: 'C.V.2', descrizione: 'Ammortamento immobilizzazioni materiali' },
+                            { codice: 'C.V.3', descrizione: 'Altre svalutazioni' },
+                            { codice: 'C.V.4', descrizione: 'Accantonamento rischi' }
                         ]
                     }
                 }
@@ -591,7 +639,8 @@
                         conti: [
                             { codice: 'R.I.1', descrizione: 'Vendita prodotti finiti' },
                             { codice: 'R.I.2', descrizione: 'Vendita merci' },
-                            { codice: 'R.I.3', descrizione: 'Prestazioni di servizi' }
+                            { codice: 'R.I.3', descrizione: 'Prestazioni di servizi' },
+                            { codice: 'R.I.4', descrizione: 'Ricavi da lavorazioni conto terzi' }
                         ]
                     },
                     'ricavi-accessori': {
@@ -600,7 +649,8 @@
                         conti: [
                             { codice: 'R.II.1', descrizione: 'Affitti attivi' },
                             { codice: 'R.II.2', descrizione: 'Royalties attive' },
-                            { codice: 'R.II.3', descrizione: 'Plusvalenze da alienazioni' }
+                            { codice: 'R.II.3', descrizione: 'Plusvalenze da alienazioni' },
+                            { codice: 'R.II.4', descrizione: 'Ricavi da formazione' }
                         ]
                     },
                     'proventi-finanziari': {
@@ -608,7 +658,19 @@
                         prefisso: 'R.III',
                         conti: [
                             { codice: 'R.III.1', descrizione: 'Interessi attivi bancari' },
-                            { codice: 'R.III.2', descrizione: 'Dividendi' }
+                            { codice: 'R.III.2', descrizione: 'Interessi su crediti commerciali' },
+                            { codice: 'R.III.3', descrizione: 'Dividendi' },
+                            { codice: 'R.III.4', descrizione: 'Proventi da partecipazioni' }
+                        ]
+                    },
+                    'altri-ricavi': {
+                        nome: 'Altri Ricavi',
+                        prefisso: 'R.IV',
+                        conti: [
+                            { codice: 'R.IV.1', descrizione: 'Sopravvenienze attive' },
+                            { codice: 'R.IV.2', descrizione: 'Contributi in conto esercizio' },
+                            { codice: 'R.IV.3', descrizione: 'Rimborsi assicurativi' },
+                            { codice: 'R.IV.4', descrizione: 'Arrotondamenti attivi' }
                         ]
                     }
                 }
@@ -623,7 +685,8 @@
                         prefisso: 'PN.I',
                         conti: [
                             { codice: 'PN.I.1', descrizione: 'Capitale sociale sottoscritto' },
-                            { codice: 'PN.I.2', descrizione: 'Capitale sociale versato' }
+                            { codice: 'PN.I.2', descrizione: 'Capitale sociale versato' },
+                            { codice: 'PN.I.3', descrizione: 'Capitale sociale da richiamare' }
                         ]
                     },
                     'riserve': {
@@ -632,7 +695,10 @@
                         conti: [
                             { codice: 'PN.II.1', descrizione: 'Riserva legale' },
                             { codice: 'PN.II.2', descrizione: 'Riserva straordinaria' },
-                            { codice: 'PN.II.3', descrizione: 'Riserva da sovrapprezzo azioni' }
+                            { codice: 'PN.II.3', descrizione: 'Riserva da sovrapprezzo azioni' },
+                            { codice: 'PN.II.4', descrizione: 'Riserva di rivalutazione' },
+                            { codice: 'PN.II.5', descrizione: 'Riserva per utili su cambi' },
+                            { codice: 'PN.II.6', descrizione: 'Riserva per azioni proprie' }
                         ]
                     },
                     'utili-perdite': {
@@ -640,7 +706,18 @@
                         prefisso: 'PN.III',
                         conti: [
                             { codice: 'PN.III.1', descrizione: 'Utili (perdite) portati a nuovo' },
-                            { codice: 'PN.III.2', descrizione: 'Utile (perdita) dell\'esercizio' }
+                            { codice: 'PN.III.2', descrizione: 'Utile (perdita) dell\'esercizio' },
+                            { codice: 'PN.III.3', descrizione: 'Acconto dividendi' }
+                        ]
+                    },
+                    'riserve-statutarie': {
+                        nome: 'Riserve Statutarie',
+                        prefisso: 'PN.IV',
+                        conti: [
+                            { codice: 'PN.IV.1', descrizione: 'Riserva per rinnovamento impianti' },
+                            { codice: 'PN.IV.2', descrizione: 'Riserva per ampliamento attività' },
+                            { codice: 'PN.IV.3', descrizione: 'Riserva straordinaria statutaria' },
+                            { codice: 'PN.IV.4', descrizione: 'Riserva per acquisto partecipazioni' }
                         ]
                     }
                 }
@@ -848,6 +925,13 @@
                 responsabile: 'Anna Bianchi',
                 budget: '30000',
                 descrizione: 'Costi amministrativi generali'
+            });
+            centriCosto.push({
+                codice: 'CD03',
+                nome: 'Commerciale',
+                responsabile: 'Luigi Verdi',
+                budget: '40000',
+                descrizione: 'Costi area commerciale e marketing'
             });
             aggiornaListaCentriCosto();
         });
